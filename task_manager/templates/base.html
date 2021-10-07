@@ -1,0 +1,26 @@
+{% load i18n %}
+
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+
+<ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link active" href="#">{% translate 'Менеджер задач' %}</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">{% translate 'Пользователи' %}</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">{% translate 'Вход' %}</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">{% translate 'Регистрация' %}</a>
+    </li>
+  </ul>
