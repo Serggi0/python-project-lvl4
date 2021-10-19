@@ -9,18 +9,19 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
 <ul class="nav nav-pills">
     <li class="nav-item">
-      <a class="nav-link active" href="#">{% translate 'Менеджер задач' %}</a>
+      <a class="nav-link active" href="#"><i class="fas fa-tasks"></i>{% translate ' Task manager' %}</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">{% translate 'Пользователи' %}</a>
+      <a class="nav-link" href="#">{% translate 'Users' %}<i class="fas fa-users"></i></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">{% translate 'Вход' %}</a>
+      <a class="nav-link" href="#">{% translate 'Entrance' %}<i class="fas fa-door-open"></i></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">{% translate 'Регистрация' %}</a>
+      <a class="nav-link" href="#">{% translate 'Registration' %}<i class="fas fa-user-plus"></i></a>
     </li>
   </ul>

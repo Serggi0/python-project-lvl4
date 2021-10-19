@@ -30,16 +30,16 @@ msgstr ""
 
 #: task_manager/templates/base.html:13
 msgid "Task manager"
-msgstr ""
+msgstr "Менеджер задач"
 
 #: task_manager/templates/base.html:16
 msgid "Users"
-msgstr ""
+msgstr "Пользователи"
 
 #: task_manager/templates/base.html:19
 msgid "Entrance"
-msgstr ""
+msgstr "Вход"
 
 #: task_manager/templates/base.html:22
 msgid "Registration"
-msgstr ""
+msgstr "Регистрация"
