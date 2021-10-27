@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'task_manager',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -146,6 +147,9 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
     # '/var/www/static/', # ! папка для сервера?
 ]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#! сборная папка для файлов в режиме эксплуатации
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
