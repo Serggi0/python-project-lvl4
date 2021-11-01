@@ -8,6 +8,7 @@
 {% block content %}
 
 	<h2>{% translate title %}</h2>
+	<a href="{% url 'users:create_status' %}">{% translate 'Create' %}</a>
 	<div class="container">
 		{% render_table table %}
 	</div>

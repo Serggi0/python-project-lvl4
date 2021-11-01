@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-07 10:31+0000\n"
+"POT-Creation-Date: 2021-10-29 14:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,26 +20,49 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: task_manager/settings.py:124
+#: task_manager/settings.py:129
 msgid "English"
 msgstr ""
 
-#: task_manager/settings.py:125
+#: task_manager/settings.py:130
 msgid "Russian"
 msgstr ""
 
-#: task_manager/templates/base.html:13
+#: task_manager/templates/base.html:19
 msgid "Task manager"
 msgstr "Менеджер задач"
 
-#: task_manager/templates/base.html:16
+#: task_manager/templates/base.html:20
 msgid "Users"
 msgstr "Пользователи"
 
-#: task_manager/templates/base.html:19
+#: task_manager/templates/base.html:25
+msgid "Statuses"
+msgstr "Статусы"
+
+#: task_manager/templates/base.html:26
+msgid "Tags"
+msgstr "Метки"
+
+#: task_manager/templates/base.html:27
+msgid "Tasks"
+msgstr "Задачи"
+
+#: task_manager/templates/base.html:28
+msgid "Logout"
+msgstr "Выход"
+
+#: task_manager/templates/base.html:32
 msgid "Entrance"
 msgstr "Вход"
 
-#: task_manager/templates/base.html:22
+#: task_manager/templates/base.html:33
 msgid "Registration"
 msgstr "Регистрация"
+
+#: task_manager/templates/home.html:8
+msgid "Hello"
+msgstr "Привет"
+
+#~ msgid "full_name"
+#~ msgstr "Полное имя"

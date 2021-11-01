@@ -8,7 +8,14 @@ lint:
 	poetry run flake8 task_manager
 	poetry run flake8 tests
 
+translate:
+	poetry run python manage.py makemessages -l ru
+
+compiletranslate:
+	poetry run python manage.py compilemessages
+
+
 test:
 	poetry run pytest -v --cov=task_manager tests/ --cov-report xml
 
-.PHONY: install lint test
+.PHONY: install lint test translate compiletranslate
