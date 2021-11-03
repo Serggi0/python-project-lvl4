@@ -23,6 +23,9 @@ from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 
 # Quick-start development settings - unsuitable for production
@@ -51,7 +54,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'django_tables2',
     'task_manager',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -119,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'ru'
 LANGUAGES = (
     ('en-us', _('English')),
     ('ru', _('Russian')),
@@ -143,8 +148,13 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
     # '/var/www/static/', # ! папка для сервера?
 ]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#! сборная папка для файлов в режиме эксплуатации
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'users.User'

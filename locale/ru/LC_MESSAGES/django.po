@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-29 14:32+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: users/tables.py:13
+msgid "EDIT"
+msgstr ""
+
+#: users/tables.py:28
+msgid "full_name"
+msgstr "Полное имя"
+
+#: users/templates/users/create.html:12 users/templates/users/create.html:18
+msgid "Register"
+msgstr "Зарегистрировать"
+
+#: users/templates/users/login.html:12 users/templates/users/login.html:17
+msgid "Enter"
+msgstr "Войти"
+
+#: users/templates/users/update.html:10
+msgid "Update"
+msgstr "Изменить"
+
+#~ msgid "Delete"
+#~ msgstr "Удалить"
+
+#~ msgid "username"
+#~ msgstr "Имя пользователя"
+
+#~ msgid "create_date"
+#~ msgstr "Дата создания"
+
+#~ msgid "Are you sure you want to delete \"{{ user }}\"?"
+#~ msgstr "Вы уверены, что хотите удалить"

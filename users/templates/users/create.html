@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block content %}
+<h2>{% translate title %}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% translate 'Register' %}</button>
+</form>
+
+{% endblock %}
+
+
+<!-- {% bootstrap_button _('Register') button_type='submit' button_class='btn-primary' %} -->

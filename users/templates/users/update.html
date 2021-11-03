@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block content %}
+<h2>{% translate title %}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% translate 'Update' %}</button>
+</form>
+
+{% endblock %}

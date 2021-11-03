@@ -16,13 +16,24 @@ Including another URLconf
 from django import urls
 from django.contrib import admin
 from django.urls import path
+from django.urls.conf import include
 from task_manager import views
-
 from django.conf import settings
 from django.conf.urls.static import static
 
+import users  #?
+
+
 urlpatterns = [
-    path('', views.index),
-    # path('admin/', admin.site.urls),
+    path('', views.index, name='home'),
+    path('admin/', admin.site.urls),
+
+    # страница входа:
+    path('login/', views.LoginUser.as_view(), name='login'),
+
+    # страница завершения сессии (выхода)
+    path('logout/', views.logout_user, name='logout'),
+
+    path('users/', include('users.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # ! настройка статических файлов
