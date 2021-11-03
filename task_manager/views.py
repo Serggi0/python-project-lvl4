@@ -37,5 +37,5 @@ class LoginUser(LoginView):
 def logout_user(request):
     # разлогинивание
     logout(request)
-    messages.info(request, 'Good bye') # todo text & translate
+    messages.info(request, 'You are logged out, Good bye') # todo text & translate
     return redirect('home')

@@ -29,7 +29,12 @@ class CreateStatusForm(forms.ModelForm):
         model = Statuses
         fields = ('name',)
 
-class UpdateStatusForm():
+class UpdateStatusForm(forms.ModelForm):
+    class Meta:
+        model = Statuses
+        fields = ('name',)
+
+class DeleteStatusForm(forms.ModelForm):
     class Meta:
         model = Statuses
         fields = ('name',)

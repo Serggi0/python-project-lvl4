@@ -9,12 +9,14 @@ from django.urls.base import reverse_lazy
 from django.views import generic
 from django.views.generic.edit import DeleteView, UpdateView
 from django.utils import timezone
-from users.forms import CreateStatusForm, CreateUserForm, UpdateStatusForm, UpdateUserForm
+from users.forms import CreateStatusForm, CreateUserForm, DeleteStatusForm, UpdateStatusForm, UpdateUserForm
 from users.tables import StatusesTable, UsersTable
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import User, Statuses, Tags, Tasks
 from django_tables2 import SingleTableView
 # from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 from django.contrib.messages.views import SuccessMessageMixin
@@ -33,7 +35,8 @@ class UsersView(SingleTableView):
     #     return super().get_context_data(**kwargs)
 
 
-class StatusesView(SingleTableView):
+class StatusesView(LoginRequiredMixin, SingleTableView):
+    login_url = 'login'
     model = Statuses
     table_class = StatusesTable
     template_name = 'users/statuses.html'
@@ -41,6 +44,7 @@ class StatusesView(SingleTableView):
     # context_object_name = 'statuses_list'
     # замена названия коллекции для html-файла вместо дефолтного object_list
     extra_context = {'title': 'Statuses'}
+
 
 
 class CreateUser(SuccessMessageMixin, generic.CreateView):
@@ -58,7 +62,9 @@ class CreateUser(SuccessMessageMixin, generic.CreateView):
     #     return dict(list(context.items()) + list(c_def.items()))
 
 
-class UpdateUser(UpdateView):
+
+class UpdateUser(LoginRequiredMixin, UpdateView):
+    login_url = 'login'
     model = User
     # fields = ['username', 'first_name', 'last_name', 'password']
     form_class = UpdateUserForm
@@ -77,32 +83,39 @@ class UpdateUser(UpdateView):
 #     u.delete()
 #     return HttpResponse(f'Удаление пользователя {user_id}')
 
-class DeleteUser(DeleteView):
+class DeleteUser(LoginRequiredMixin, DeleteView):
+    login_url = 'login'
     model = User
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users')
     extra_context = {'title': 'Delete'}
 
 
-class CreateStatus(SuccessMessageMixin, generic.CreateView):
-    # model = Statuses
+class CreateStatus(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+    login_url = 'login'
+    model = Statuses
     form_class = CreateStatusForm
-    # fields = ['name']
     template_name = 'users/create-status.html'
-    success_url = reverse_lazy('statuses')
+    success_url = reverse_lazy('users:statuses')
     success_message = "%(name)s was created successfully"  # todo Перевод
     extra_context = {'title': 'Create Status'}
 
-class DeleteStatus(DeleteView):
+
+class DeleteStatus(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    login_url = 'login'
     model = Statuses
+    form_class = DeleteStatusForm
     template_name = 'users/delete.html'
-    success_url = reverse_lazy('statuses')
+    success_url = reverse_lazy('users:statuses')
+    success_message = "%(name)s was deleted successfully"  # todo Перевод
     extra_context = {'title': 'Delete'}
 
 
-class UpdateStatus(UpdateView):
+class UpdateStatus(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    login_url = 'login'
     model = Statuses
     form_class = UpdateStatusForm
     template_name = 'users/update.html'
-    success_url = reverse_lazy('statuses')
+    success_url = reverse_lazy('users:statuses')
+    success_message = "%(name)s was updated successfully"  # todo Перевод
     extra_context = {'title': 'Update'}

@@ -1,13 +1,20 @@
+{% extends 'base.html' %}
+
 {% load i18n %}
 {% load bootstrap4 %}
 
 {% block content %}
 <h2>{% translate title %}</h2>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">{% translate 'Update' %}</button>
-</form>
+<!-- {% if user.is_authenticated %} -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% translate 'Update' %}</button>
+    </form>
+<!-- {% else %}
+    Login is required требуется логин-->
+
+{% endif %}
 
 {% endblock %}
