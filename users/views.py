@@ -9,7 +9,7 @@ from django.urls.base import reverse_lazy
 from django.views import generic
 from django.views.generic.edit import DeleteView, UpdateView
 from django.utils import timezone
-from users.forms import CreateUserForm, UpdateUserForm
+from users.forms import CreateStatusForm, CreateUserForm, UpdateStatusForm, UpdateUserForm
 from users.tables import StatusesTable, UsersTable
 
 from .models import User, Statuses, Tags, Tasks
@@ -69,8 +69,8 @@ class UpdateUser(UpdateView):
 # def create(request):
 #     return HttpResponse('Регистрация пользователя')
 
-def update_user(request, user_id):
-    return HttpResponse(f'Редактирование пользователя {user_id}')
+# def update_user(request, user_id):
+#     return HttpResponse(f'Редактирование пользователя {user_id}')
 
 # def delete_user(request, user_id):
 #     u = Users.objects.get(pk=user_id)
@@ -83,9 +83,26 @@ class DeleteUser(DeleteView):
     success_url = reverse_lazy('users')
     extra_context = {'title': 'Delete'}
 
-class CreateStatus(generic.CreateView):
-    model = Statuses
-    fields = ['name']
+
+class CreateStatus(SuccessMessageMixin, generic.CreateView):
+    # model = Statuses
+    form_class = CreateStatusForm
+    # fields = ['name']
     template_name = 'users/create-status.html'
     success_url = reverse_lazy('statuses')
+    success_message = "%(name)s was created successfully"  # todo Перевод
     extra_context = {'title': 'Create Status'}
+
+class DeleteStatus(DeleteView):
+    model = Statuses
+    template_name = 'users/delete.html'
+    success_url = reverse_lazy('statuses')
+    extra_context = {'title': 'Delete'}
+
+
+class UpdateStatus(UpdateView):
+    model = Statuses
+    form_class = UpdateStatusForm
+    template_name = 'users/update.html'
+    success_url = reverse_lazy('statuses')
+    extra_context = {'title': 'Update'}

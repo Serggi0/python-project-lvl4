@@ -8,8 +8,8 @@ from django.utils.translation import ugettext as _
 
 class StatusesTable(tables.Table):
     TEMPLATE = '''
-    <a href="{% url 'users:update_statuses' record.pk %}" class="tbl_icon edit">Edit</a>
-    <a href="{% url 'users:delete_statuses' record.pk %}" class="tbl_icon delete">Delete</a>
+    <a href="{% url 'users:update_status' record.pk %}" class="tbl_icon edit">Edit</a>
+    <a href="{% url 'users:delete_status' record.pk %}" class="tbl_icon delete">Delete</a>
 '''
     links = tables.TemplateColumn(TEMPLATE, empty_values=(), verbose_name='')
 

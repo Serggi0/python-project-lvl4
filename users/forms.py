@@ -24,7 +24,7 @@ class UpdateUserForm(UserChangeForm):
         fields = ('username', 'first_name', 'last_name', 'password1', 'password2')
 
 
-class CreateStatusForm():
+class CreateStatusForm(forms.ModelForm):
     class Meta:
         model = Statuses
         fields = ('name',)

@@ -20,7 +20,9 @@ urlpatterns = [
 
     # страница статусов:
     path('statuses/', views.StatusesView.as_view(), name='statuses'),
-    path('statuses/create', views.CreateStatus.as_view(), name='create_status')
+    path('statuses/create', views.CreateStatus.as_view(), name='create_status'),
+    path('statuses/<int:pk>/update/', views.UpdateStatus.as_view(), name='update_status'),
+    path('statuses/<int:pk>/delete/', views.DeleteStatus.as_view(), name='delete_status'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # ! настройка статических файлов
