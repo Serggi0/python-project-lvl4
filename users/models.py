@@ -27,7 +27,7 @@ class User(AbstractUser):
     # https://youtu.be/CFO4aAsUuUk?list=PLA0M1Bcd0w8xO_39zZll2u1lz_Q-Mwn1F&t=732
 
 
-class Statuses(models.Model):
+class Status(models.Model):
     name = models.CharField(unique=True, max_length=100)
     create_date = models.DateTimeField(auto_now_add=True)
 
@@ -35,7 +35,7 @@ class Statuses(models.Model):
         return self.name
 
 
-class Tags(models.Model):
+class Tag(models.Model):
     name = models.CharField(unique=True, max_length=100)
     create_date = models.DateTimeField(auto_now_add=True)
 
@@ -43,14 +43,14 @@ class Tags(models.Model):
         return self.name
 
 
-class Tasks(models.Model):
+class Task(models.Model):
     name = models.CharField(max_length=250)
     description = models.CharField(max_length=250)
-    # user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='+', null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=True)
     # https://djangodoc.ru/3.1/ref/models/fields/#django.db.models.ForeignKey.related_name
-    executor_id = models.OneToOneField(User, on_delete=models.CASCADE)
-    status_id = models.OneToOneField(Statuses, on_delete=models.PROTECT)
-    tag_id = models.OneToOneField(Tags, on_delete=models.PROTECT)
+    executor = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    status = models.ForeignKey(Status, on_delete=models.PROTECT, null=True)
+    tag = models.OneToOneField(Tag, on_delete=models.PROTECT, null=True)
     create_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:

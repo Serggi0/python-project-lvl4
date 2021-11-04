@@ -26,15 +26,49 @@ class UpdateUserForm(UserChangeForm):
 
 class CreateStatusForm(forms.ModelForm):
     class Meta:
-        model = Statuses
+        model = Status
         fields = ('name',)
+        labels = {'name': _('Name'),}
+        help_texts = {
+            'name': _('Some useful help text.'),
+        }
+        error_messages = {
+            'name': {
+                'max_length': _("This name is too long."),
+            },
+        }
 
 class UpdateStatusForm(forms.ModelForm):
     class Meta:
-        model = Statuses
+        model = Status
         fields = ('name',)
 
 class DeleteStatusForm(forms.ModelForm):
     class Meta:
-        model = Statuses
+        model = Status
+        fields = ('name',)
+
+
+class CreateTaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ('name', 'description', 'status', 'executor',)
+        # labels = {'name': _('Name'),}
+        # help_texts = {
+        #     'name': _('Some useful help text.'),
+        # }
+        # error_messages = {
+        #     'name': {
+        #         'max_length': _("This name is too long."),
+        #     },
+        # }
+
+class UpdateTaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ('name', 'description', 'status', 'executor',)
+
+class DeleteTaskForm(forms.ModelForm):
+    class Meta:
+        model = Status
         fields = ('name',)

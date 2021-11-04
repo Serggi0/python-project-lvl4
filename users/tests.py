@@ -40,10 +40,10 @@ class UserTestCase(TestCase):
 
 class StatusTestCase(TestCase):
     def setUp(self):
-        self.status = Statuses.objects.create(
+        self.status = Status.objects.create(
             name='in working',
         )
 
     def test_create_status(self):
-        self.assertIn(self.status, Statuses.objects.all())
+        self.assertIn(self.status, Status.objects.all())
 

@@ -1,6 +1,6 @@
 from django.contrib import admin
-from users.models import User
+from users.models import *
 
 
-admin.site.register(User)
-# ! вынести модель в панель администратора
+admin.site.register([User, Task, Status, Tag])
+# ! выносит модель в панель администратора

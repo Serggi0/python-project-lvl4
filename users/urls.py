@@ -24,5 +24,13 @@ urlpatterns = [
     path('statuses/<int:pk>/update/', views.UpdateStatus.as_view(), name='update_status'),
     path('statuses/<int:pk>/delete/', views.DeleteStatus.as_view(), name='delete_status'),
 
+    # страница задач:
+    path('tasks/', views.TaskView.as_view(), name='tasks'),
+    path('tasks/create', views.CreateTask.as_view(), name='create_task'),
+    path('tasks/<int:pk>/update/', views.UpdateTask.as_view(), name='update_task'),
+    path('tasks/<int:pk>/delete/', views.DeleteTask.as_view(), name='delete_task'),
+
+
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # ! настройка статических файлов
