@@ -12,14 +12,14 @@
 <head>
   <title>{% translate title %}</title>
 
-  <!-- для сообщений -->
+  <!-- для сообщений
   {% if messages %}
 <ul class="messages">
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
-{% endif %}
+{% endif %} -->
 
 </head>
 
@@ -33,7 +33,7 @@
     {% if user.is_authenticated %}
       <ul>
         <li><a href="{% url 'users:statuses' %}">{% translate 'Statuses' %}</a></li>
-        <li><a href="#">{% translate 'Tags' %}</a></li>
+        <li><a href="{% url 'users:labels' %}">{% translate 'Label' %}</a></li>
         <li><a href="{% url 'users:tasks' %}">{% translate 'Tasks' %}</a></li>
         <li><a href="{% url 'logout' %}">{% translate 'Logout' %}</a></li>
       </ul>

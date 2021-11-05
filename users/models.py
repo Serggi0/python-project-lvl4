@@ -35,7 +35,7 @@ class Status(models.Model):
         return self.name
 
 
-class Tag(models.Model):
+class Label(models.Model):
     name = models.CharField(unique=True, max_length=100)
     create_date = models.DateTimeField(auto_now_add=True)
 
@@ -46,11 +46,11 @@ class Tag(models.Model):
 class Task(models.Model):
     name = models.CharField(max_length=250)
     description = models.CharField(max_length=250)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author', null=True)
     # https://djangodoc.ru/3.1/ref/models/fields/#django.db.models.ForeignKey.related_name
-    executor = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    executor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='executor', null=True, blank=True)
+    label = models.ManyToManyField(Label)
     status = models.ForeignKey(Status, on_delete=models.PROTECT, null=True)
-    tag = models.OneToOneField(Tag, on_delete=models.PROTECT, null=True)
     create_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:

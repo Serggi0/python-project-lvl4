@@ -9,11 +9,11 @@ from django.urls.base import reverse_lazy
 from django.views import generic
 from django.views.generic.edit import DeleteView, UpdateView
 from django.utils import timezone
-from users.forms import CreateStatusForm, CreateTaskForm, CreateUserForm, DeleteStatusForm, DeleteTaskForm, UpdateStatusForm, UpdateTaskForm, UpdateUserForm
-from users.tables import StatusesTable, TasksTable, UsersTable
+from users.forms import CreateLabelForm, CreateStatusForm, CreateTaskForm, CreateUserForm, DeleteLabelForm, DeleteStatusForm, DeleteTaskForm, UpdateLabelForm, UpdateStatusForm, UpdateTaskForm, UpdateUserForm
+from users.tables import LabelsTable, StatusesTable, TasksTable, UsersTable
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import User, Status, Tag, Task
+from .models import User, Status, Label, Task
 from django_tables2 import SingleTableView
 # from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -119,7 +119,7 @@ class UpdateStatus(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     extra_context = {'title': 'Update'}
 
 
-class TaskView(LoginRequiredMixin, SingleTableView):
+class TasksView(LoginRequiredMixin, SingleTableView):
     login_url = 'login'
     model = Task
     table_class = TasksTable
@@ -152,5 +152,48 @@ class UpdateTask(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = UpdateTaskForm
     template_name = 'users/update.html'
     success_url = reverse_lazy('users:tasks')
+    success_message = "%(name)s was updated successfully"  # todo Перевод
+    extra_context = {'title': 'Update'}
+
+
+
+
+class LabelsView(LoginRequiredMixin, SingleTableView):
+    login_url = 'login'
+    model = Label
+    table_class = LabelsTable
+    template_name = 'users/labels.html'
+    # замена имени шаблона вместо дефолтного 'users_list'
+    # context_object_name = 'statuses_list'
+    # замена названия коллекции для html-файла вместо дефолтного object_list
+    extra_context = {'title': 'Labels'}
+
+
+class CreateLabel(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+    login_url = 'login'
+    model = Label
+    form_class = CreateLabelForm
+    template_name = 'users/create-label.html'
+    success_url = reverse_lazy('users:labels')
+    success_message = "%(name)s was created successfully"  # todo Перевод
+    extra_context = {'title': 'Create Label'}
+
+
+class DeleteLabel(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    login_url = 'login'
+    model = Label
+    form_class = DeleteLabelForm
+    template_name = 'users/delete.html'
+    success_url = reverse_lazy('users:labels')
+    success_message = "%(name)s was deleted successfully"  # todo Перевод
+    extra_context = {'title': 'Delete'}
+
+
+class UpdateLabel(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    login_url = 'login'
+    model = Label
+    form_class = UpdateLabelForm
+    template_name = 'users/update.html'
+    success_url = reverse_lazy('users:labels')
     success_message = "%(name)s was updated successfully"  # todo Перевод
     extra_context = {'title': 'Update'}

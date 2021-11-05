@@ -52,7 +52,7 @@ class DeleteStatusForm(forms.ModelForm):
 class CreateTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ('name', 'description', 'status', 'executor',)
+        fields = ('name', 'description', 'author', 'status', 'executor', 'label')
         # labels = {'name': _('Name'),}
         # help_texts = {
         #     'name': _('Some useful help text.'),
@@ -66,9 +66,26 @@ class CreateTaskForm(forms.ModelForm):
 class UpdateTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ('name', 'description', 'status', 'executor',)
+        fields = ('name', 'description', 'author', 'status', 'executor', 'label')
 
 class DeleteTaskForm(forms.ModelForm):
     class Meta:
         model = Status
+        fields = ('name',)
+
+
+class CreateLabelForm(forms.ModelForm):
+    class Meta:
+        model = Label
+        fields = ('name',)
+
+
+class UpdateLabelForm(forms.ModelForm):
+    class Meta:
+        model = Label
+        fields = ('name',)
+
+class DeleteLabelForm(forms.ModelForm):
+    class Meta:
+        model = Label
         fields = ('name',)
