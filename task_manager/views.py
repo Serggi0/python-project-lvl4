@@ -29,9 +29,8 @@ class LoginUser(LoginView):
     }
 
     def get_success_url(self):
-        messages.info(self.request, 'Hello') # todo text & translate
+        # messages.info(self.request, 'Hello') # todo text & translate
         return reverse_lazy('home')
-
 
 
 def logout_user(request):

@@ -19,9 +19,8 @@ from django_tables2 import SingleTableView
 # from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django_filters.views import FilterView
-
-
 from django.contrib.messages.views import SuccessMessageMixin
+
 
 class UsersView(SingleTableView):
     model = User
@@ -44,7 +43,10 @@ class CreateUser(SuccessMessageMixin, generic.CreateView):
     # https://youtu.be/QK4qbVyY7oU?list=PLA0M1Bcd0w8xO_39zZll2u1lz_Q-Mwn1F
     success_message = "%(username)s was created successfully"  # todo Перевод
     # ! https://djangodoc.ru/3.1/ref/contrib/messages/
-    extra_context = {'title': 'Registration'}
+    extra_context = {
+        'title': 'Registration',
+        'button_name': 'Register'
+        }
 
     # def get_context_data(self, *, object_list=None, **kwargs):
     #     context = super().get_context_data(**kwargs)
@@ -59,7 +61,7 @@ class UpdateUser(LoginRequiredMixin, UpdateView):
     form_class = UpdateUserForm
     template_name = 'users/update.html'
     success_url = reverse_lazy('login')
-    extra_context = {'title': 'Update'}
+    extra_context = {'title': 'Update user'}
 
 # def create(request):
 #     return HttpResponse('Регистрация пользователя')
@@ -72,12 +74,13 @@ class UpdateUser(LoginRequiredMixin, UpdateView):
 #     u.delete()
 #     return HttpResponse(f'Удаление пользователя {user_id}')
 
+
 class DeleteUser(LoginRequiredMixin, DeleteView):
     login_url = 'login'
     model = User
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users')
-    extra_context = {'title': 'Delete'}
+    extra_context = {'title': 'Delete user'}
 
 
 class StatusesView(LoginRequiredMixin, SingleTableView):
@@ -95,10 +98,13 @@ class CreateStatus(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     login_url = 'login'
     model = Status
     form_class = CreateStatusForm
-    template_name = 'users/create-status.html'
+    template_name = 'users/create.html'
     success_url = reverse_lazy('users:statuses')
     success_message = "%(name)s was created successfully"  # todo Перевод
-    extra_context = {'title': 'Create Status'}
+    extra_context = {
+        'title': 'Create Status',
+        'button_name': 'Create'
+        }
 
 
 class DeleteStatus(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
@@ -108,7 +114,7 @@ class DeleteStatus(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users:statuses')
     success_message = "%(name)s was deleted successfully"  # todo Перевод
-    extra_context = {'title': 'Delete'}
+    extra_context = {'title': 'Delete status'}
 
 
 class UpdateStatus(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
@@ -118,7 +124,7 @@ class UpdateStatus(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'users/update.html'
     success_url = reverse_lazy('users:statuses')
     success_message = "%(name)s was updated successfully"  # todo Перевод
-    extra_context = {'title': 'Update'}
+    extra_context = {'title': 'Update status'}
 
 
 class TasksView(LoginRequiredMixin, FilterView, SingleTableView):
@@ -134,10 +140,13 @@ class CreateTask(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     login_url = 'login'
     model = Task
     form_class = CreateTaskForm
-    template_name = 'users/create-task.html'
+    template_name = 'users/create.html'
     success_url = reverse_lazy('users:tasks')
     success_message = "%(name)s was created successfully"  # todo Перевод
-    extra_context = {'title': 'Create Task'}
+    extra_context = {
+        'title': 'Create task',
+        'button_name': 'Create'
+        }
 
 
 class DeleteTask(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
@@ -147,7 +156,7 @@ class DeleteTask(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users:tasks')
     success_message = "%(name)s was deleted successfully"  # todo Перевод
-    extra_context = {'title': 'Delete'}
+    extra_context = {'title': 'Delete task'}
 
 
 class UpdateTask(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
@@ -157,9 +166,7 @@ class UpdateTask(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'users/update.html'
     success_url = reverse_lazy('users:tasks')
     success_message = "%(name)s was updated successfully"  # todo Перевод
-    extra_context = {'title': 'Update'}
-
-
+    extra_context = {'title': 'Update task'}
 
 
 class LabelsView(LoginRequiredMixin, SingleTableView):
@@ -177,10 +184,13 @@ class CreateLabel(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     login_url = 'login'
     model = Label
     form_class = CreateLabelForm
-    template_name = 'users/create-label.html'
+    template_name = 'users/create.html'
     success_url = reverse_lazy('users:labels')
     success_message = "%(name)s was created successfully"  # todo Перевод
-    extra_context = {'title': 'Create Label'}
+    extra_context = {
+        'title': 'Create Label',
+        'button_name': 'Create label'
+        }
 
 
 class DeleteLabel(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
@@ -190,7 +200,7 @@ class DeleteLabel(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users:labels')
     success_message = "%(name)s was deleted successfully"  # todo Перевод
-    extra_context = {'title': 'Delete'}
+    extra_context = {'title': 'Delete label'}
 
 
 class UpdateLabel(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
@@ -200,4 +210,4 @@ class UpdateLabel(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'users/update.html'
     success_url = reverse_lazy('users:labels')
     success_message = "%(name)s was updated successfully"  # todo Перевод
-    extra_context = {'title': 'Update'}
+    extra_context = {'title': 'Update label'}

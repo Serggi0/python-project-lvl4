@@ -46,4 +46,3 @@ class StatusTestCase(TestCase):
 
     def test_create_status(self):
         self.assertIn(self.status, Status.objects.all())
-

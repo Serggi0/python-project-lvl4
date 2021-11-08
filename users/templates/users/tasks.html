@@ -7,18 +7,20 @@
 
 {% block content %}
 
-	<h2>{% translate title %}</h2>
+<div class="container wrapper flex-grow-1">
+	<h1 class="my-4">{% translate title %}</h1>
 	<a href="{% url 'users:create_task' %}">{% translate 'Create task' %}</a>
-
-	<form method="get" class="form">
-        {{ filter.form.as_p }}
-        {% buttons %}
-        <button type="submit" class="btn btn-primary">{% translate 'See' %}</button>
-        {% endbuttons %}
-    </form>
-
-	<div class="container">
-		{% render_table table %}
+	
+	<div class="card mb-3">
+		<form method="get" class="form">
+			{{ filter.form.as_p }}
+			{% buttons %}
+			<button type="submit" class="btn btn-primary">{% translate 'See' %}</button>
+			{% endbuttons %}
+		</form>
 	</div>
+	
+	{% render_table table %}
+</div>
 
 {% endblock %}

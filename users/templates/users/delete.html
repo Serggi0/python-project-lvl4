@@ -4,11 +4,15 @@
 {% load bootstrap4 %}
 
 {% block content %}
-<h2>{% translate title %}</h2>
 
-<form method="post">
-    {% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    <input type="submit" value="Yes, delete">
-</form>
+<div class="container wrapper flex-grow-1">
+	<h1 class="my-4">{% translate title %}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <p>{% blocktranslate %}Are you sure you want to delete "{{ object }}"?{% endblocktranslate %}</p>
+        <button type="submit" class="btn btn-danger">{% translate "Yes, delete" %}</button>
+    </form>
+</div>
+
 {% endblock %}
