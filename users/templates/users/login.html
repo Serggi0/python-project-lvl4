@@ -6,12 +6,14 @@
 {% block content %}
 <h2>{% translate title %}</h2>
 
-<form method="post">
+<form method="post" class="form">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">{% translate 'Enter' %}</button>
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">{% translate 'Enter' %}</button>
+    {% endbuttons %}
 </form>
-    {% endblock %}
-    
-    
-    <!-- {% bootstrap_button _('Enter') button_type='submit' button_class='btn-primary' %}-->
+{% endblock %}
+
+
+<!-- {% bootstrap_button _('Enter') button_type='submit' button_class='btn-primary' %}-->

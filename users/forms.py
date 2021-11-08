@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
 
+
 from .models import *
 
 class CreateUserForm(UserCreationForm):

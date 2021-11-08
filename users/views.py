@@ -9,6 +9,7 @@ from django.urls.base import reverse_lazy
 from django.views import generic
 from django.views.generic.edit import DeleteView, UpdateView
 from django.utils import timezone
+from users.filters import TaskFilter
 from users.forms import CreateLabelForm, CreateStatusForm, CreateTaskForm, CreateUserForm, DeleteLabelForm, DeleteStatusForm, DeleteTaskForm, UpdateLabelForm, UpdateStatusForm, UpdateTaskForm, UpdateUserForm
 from users.tables import LabelsTable, StatusesTable, TasksTable, UsersTable
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,6 +18,7 @@ from .models import User, Status, Label, Task
 from django_tables2 import SingleTableView
 # from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django_filters.views import FilterView
 
 
 from django.contrib.messages.views import SuccessMessageMixin
@@ -119,12 +121,14 @@ class UpdateStatus(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     extra_context = {'title': 'Update'}
 
 
-class TasksView(LoginRequiredMixin, SingleTableView):
+class TasksView(LoginRequiredMixin, FilterView, SingleTableView):
     login_url = 'login'
     model = Task
+    filterset_class = TaskFilter
     table_class = TasksTable
     template_name = 'users/tasks.html'
     extra_context = {'title': 'Tasks'}
+
 
 class CreateTask(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     login_url = 'login'

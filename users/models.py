@@ -49,7 +49,7 @@ class Task(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author', null=True)
     # https://djangodoc.ru/3.1/ref/models/fields/#django.db.models.ForeignKey.related_name
     executor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='executor', null=True, blank=True)
-    label = models.ManyToManyField(Label)
+    label = models.ManyToManyField(Label, blank=True)
     status = models.ForeignKey(Status, on_delete=models.PROTECT, null=True)
     create_date = models.DateTimeField(auto_now_add=True)
 

@@ -6,10 +6,13 @@
 {% block content %}
 <h2>{% translate title %}</h2>
 
-<form method="post">
+<form method="post" class="form">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">{% translate 'Register' %}</button>
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">{% translate 'Register' %}</button>
+    {% endbuttons %}
+
 </form>
 
 {% endblock %}
