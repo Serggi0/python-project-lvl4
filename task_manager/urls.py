@@ -32,8 +32,9 @@ urlpatterns = [
     path('login/', views.LoginUser.as_view(), name='login'),
 
     # страница завершения сессии (выхода)
-    path('logout/', views.logout_user, name='logout'),
+    path('logout/', views.LogoutUser.as_view(), name='logout'),
 
     path('users/', include('users.urls')),
+    path('statuses/', include('statuses.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # ! настройка статических файлов

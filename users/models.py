@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
+from statuses.models import Status
 
 
 class User(AbstractUser):
@@ -28,12 +29,12 @@ class User(AbstractUser):
     # https://youtu.be/CFO4aAsUuUk?list=PLA0M1Bcd0w8xO_39zZll2u1lz_Q-Mwn1F&t=732
 
 
-class Status(models.Model):
-    name = models.CharField(unique=True, max_length=100)
-    create_date = models.DateTimeField(auto_now_add=True)
+# class Status(models.Model):
+#     name = models.CharField(unique=True, max_length=100)
+#     create_date = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self) -> str:
-        return self.name
+#     def __str__(self) -> str:
+#         return self.name
 
 
 class Label(models.Model):

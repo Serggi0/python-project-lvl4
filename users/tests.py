@@ -2,9 +2,9 @@ from django.http import response
 from django.test import TestCase, RequestFactory
 
 from django.contrib.auth import get_user_model
-from task_manager.views import logout_user
 
-from users.views import CreateStatus, CreateUser, UpdateUser
+from users.views import CreateUser, UpdateUser
+from statuses.views import CreateStatus
 
 from .models import *
 

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
 
 from .models import *
+from statuses.models import Status
 
 
 class CreateUserForm(UserCreationForm):

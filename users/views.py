@@ -9,17 +9,21 @@ from django.urls.base import reverse_lazy
 from django.views import generic
 from django.views.generic.edit import DeleteView, UpdateView
 from django.utils import timezone
+from statuses.forms import StatusForm
 from users.filters import TaskFilter
 from users.forms import CreateLabelForm, CreateStatusForm, CreateTaskForm, CreateUserForm, DeleteLabelForm, DeleteStatusForm, DeleteTaskForm, UpdateLabelForm, UpdateStatusForm, UpdateTaskForm, UpdateUserForm
-from users.tables import LabelsTable, StatusesTable, TasksTable, UsersTable
-from django.contrib.auth.mixins import LoginRequiredMixin
+from users.tables import LabelsTable, TasksTable, UsersTable
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from .models import User, Status, Label, Task
+from users.models import User, Label, Task
 from django_tables2 import SingleTableView
 # from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django_filters.views import FilterView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.utils.translation import gettext as _
+from django.contrib import messages
+from django.shortcuts import redirect
 
 
 class UsersView(SingleTableView):
@@ -54,14 +58,31 @@ class CreateUser(SuccessMessageMixin, generic.CreateView):
     #     return dict(list(context.items()) + list(c_def.items()))
 
 
-class UpdateUser(LoginRequiredMixin, UpdateView):
+class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     login_url = 'login'
     model = User
     # fields = ['username', 'first_name', 'last_name', 'password']
     form_class = UpdateUserForm
     template_name = 'users/update.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('users:users')
     extra_context = {'title': 'Update user'}
+    success_message = _('%(username)s was updated successfully')
+    error_message = _('You are not logged in! Please log in.')
+
+    def handle_no_permission(self):
+        messages.error(
+            self.request,
+            self.error_message
+            )
+        return redirect(self.login_url)
+
+    def test_func(self):
+        obj = self.get_object()
+        if self.request.user.is_authenticated and obj.pk != self.request.user.pk:
+            self.error_message = _("You don't have the rights to change another user.")
+            self.login_url = reverse_lazy('users:users')
+            return False
+        return True
 
 # def create(request):
 #     return HttpResponse('Регистрация пользователя')
@@ -75,56 +96,44 @@ class UpdateUser(LoginRequiredMixin, UpdateView):
 #     return HttpResponse(f'Удаление пользователя {user_id}')
 
 
-class DeleteUser(LoginRequiredMixin, DeleteView):
+class DeleteUser(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
     login_url = 'login'
     model = User
     template_name = 'users/delete.html'
-    success_url = reverse_lazy('users')
+    success_url = reverse_lazy('users:users')
     extra_context = {'title': 'Delete user'}
+    success_message = _('User has been successfully deleted')
+    error_message = _('You are not logged in! Please log in.')
+
+    def handle_no_permission(self):
+        messages.error(
+            self.request,
+            self.error_message
+            )
+        return redirect(self.login_url)
+
+    def delete(self, request, *args, **kwargs):
+        if Task.objects.filter(author=self.request.user.pk) or Task.objects.filter(executor=self.request.user.pk):
+            messages.error(
+                self.request,
+                _('It is not possible to delete a user because it is being used')
+                )
+            return redirect(reverse_lazy('users'))
+        messages.success(
+            self.request,
+            self.success_message
+            )
+        return super().delete(request, *args, **kwargs)
+
+    def test_func(self):
+        obj = self.get_object()
+        if self.request.user.is_authenticated and obj.pk != self.request.user.pk:
+            self.error_message = _("You don't have the rights to delete another user.")
+            self.login_url = reverse_lazy('users:users')
+            return False
+        return True
 
 
-class StatusesView(LoginRequiredMixin, SingleTableView):
-    login_url = 'login'
-    model = Status
-    table_class = StatusesTable
-    template_name = 'users/statuses.html'
-    # замена имени шаблона вместо дефолтного 'users_list'
-    # context_object_name = 'statuses_list'
-    # замена названия коллекции для html-файла вместо дефолтного object_list
-    extra_context = {'title': 'Statuses'}
-
-
-class CreateStatus(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
-    login_url = 'login'
-    model = Status
-    form_class = CreateStatusForm
-    template_name = 'users/create.html'
-    success_url = reverse_lazy('users:statuses')
-    success_message = "%(name)s was created successfully"  # todo Перевод
-    extra_context = {
-        'title': 'Create Status',
-        'button_name': 'Create'
-        }
-
-
-class DeleteStatus(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
-    login_url = 'login'
-    model = Status
-    form_class = DeleteStatusForm
-    template_name = 'users/delete.html'
-    success_url = reverse_lazy('users:statuses')
-    success_message = "%(name)s was deleted successfully"  # todo Перевод
-    extra_context = {'title': 'Delete status'}
-
-
-class UpdateStatus(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    login_url = 'login'
-    model = Status
-    form_class = UpdateStatusForm
-    template_name = 'users/update.html'
-    success_url = reverse_lazy('users:statuses')
-    success_message = "%(name)s was updated successfully"  # todo Перевод
-    extra_context = {'title': 'Update status'}
 
 
 class TasksView(LoginRequiredMixin, FilterView, SingleTableView):

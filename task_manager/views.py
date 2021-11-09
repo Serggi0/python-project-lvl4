@@ -1,5 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.exceptions import ValidationError
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import logout
@@ -21,20 +23,33 @@ class LoginUser(LoginView):
     form_class = AuthenticationForm  # стандартная форма авторизации
     template_name = 'users/login.html'
     extra_context = {'title': 'Entrance'}
-    error_messages = {
-        'invalid_login': _(
-            'The error came out'
-        ),
-        'inactive': _("This account is inactive."),
-    }
+    error_message = '!!!'
+    # _("Please enter a correct %(username)s and password. Note that both ")
+
+    def get_invalid_login_error(self):
+        messages.add_message(
+            self.request,
+            messages.error,
+            '!!!!')
+        return redirect(self.login_url)
 
     def get_success_url(self):
-        # messages.info(self.request, 'Hello') # todo text & translate
+        messages.success(self.request, _('You are logged in')) # todo text & translate
         return reverse_lazy('home')
 
 
-def logout_user(request):
-    # разлогинивание
-    logout(request)
-    messages.info(request, 'You are logged out, Good bye') # todo text & translate
-    return redirect('home')
+class LogoutUser(LogoutView):
+
+    def get_next_page(self):
+        # messages.add_message(
+        #     self.request, messages.SUCCESS,
+        #     _('You are logged out, Good bye')
+        # )
+        messages.info(self.request, _('You are logged out, Good bye'))
+        return reverse_lazy('home')
+
+# def logout_user(request):
+#     # разлогинивание
+#     logout(request)
+#     messages.info(request, 'You are logged out, Good bye') # todo text & translate
+#     return redirect('home')

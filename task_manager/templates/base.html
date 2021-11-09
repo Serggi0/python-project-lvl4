@@ -28,7 +28,7 @@
         </li>
         {% if request.user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'users:statuses' %}">{% translate 'Statuses' %}</a>
+            <a class="nav-link" href="{% url 'statuses:statuses' %}">{% translate 'Statuses' %}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'users:labels' %}">{% translate 'Label' %}</a>
@@ -48,7 +48,7 @@
               <a class="nav-link" href="{% url 'login' %}">{% translate 'Entrance' %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'users:create' %}">{% translate 'Registration' %}</a>
+              <a class="nav-link" href="{% url 'users:create_user' %}">{% translate 'Registration' %}</a>
             </li>
             {% endif %}
       </ul>
@@ -57,7 +57,10 @@
 
 {% endblock %}
 
+<div class="container wrapper flex-grow-1">
   {% bootstrap_messages %}
+</div>
+
 
   {% block content %}{% endblock %}
 
