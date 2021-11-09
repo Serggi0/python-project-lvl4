@@ -27,31 +27,31 @@ class UpdateUserForm(UserChangeForm):
         fields = ('username', 'first_name', 'last_name', 'password1', 'password2')
 
 
-class CreateStatusForm(forms.ModelForm):
-    class Meta:
-        model = Status
-        fields = ('name',)
-        # labels = {'name': _('Name'),}
-        # help_texts = {
-        #     'name': _('Some useful help text.'),
-        # }
-        # error_messages = {
-        #     'name': {
-        #         'max_length': _("This name is too long."),
-        #     },
-        # }
+# class CreateStatusForm(forms.ModelForm):
+#     class Meta:
+#         model = Status
+#         fields = ('name',)
+#         # labels = {'name': _('Name'),}
+#         # help_texts = {
+#         #     'name': _('Some useful help text.'),
+#         # }
+#         # error_messages = {
+#         #     'name': {
+#         #         'max_length': _("This name is too long."),
+#         #     },
+#         # }
 
 
-class UpdateStatusForm(forms.ModelForm):
-    class Meta:
-        model = Status
-        fields = ('name',)
+# class UpdateStatusForm(forms.ModelForm):
+#     class Meta:
+#         model = Status
+#         fields = ('name',)
 
 
-class DeleteStatusForm(forms.ModelForm):
-    class Meta:
-        model = Status
-        fields = ('name',)
+# class DeleteStatusForm(forms.ModelForm):
+#     class Meta:
+#         model = Status
+#         fields = ('name',)
 
 
 class CreateTaskForm(forms.ModelForm):
@@ -81,18 +81,18 @@ class DeleteTaskForm(forms.ModelForm):
         fields = ('name',)
 
 
-class CreateLabelForm(forms.ModelForm):
-    class Meta:
-        model = Label
-        fields = ('name',)
+# class CreateLabelForm(forms.ModelForm):
+#     class Meta:
+#         model = Label
+#         fields = ('name',)
 
 
-class UpdateLabelForm(forms.ModelForm):
-    class Meta:
-        model = Label
-        fields = ('name',)
+# class UpdateLabelForm(forms.ModelForm):
+#     class Meta:
+#         model = Label
+#         fields = ('name',)
 
-class DeleteLabelForm(forms.ModelForm):
-    class Meta:
-        model = Label
-        fields = ('name',)
+# class DeleteLabelForm(forms.ModelForm):
+#     class Meta:
+#         model = Label
+#         fields = ('name',)

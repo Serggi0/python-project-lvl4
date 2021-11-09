@@ -3,4 +3,3 @@ from .models import Status
 
 
 admin.site.register(Status)
-

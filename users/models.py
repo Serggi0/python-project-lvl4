@@ -3,6 +3,7 @@ from django.db import models
 from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
 from statuses.models import Status
+from labels.models import Label
 
 
 class User(AbstractUser):
@@ -37,12 +38,12 @@ class User(AbstractUser):
 #         return self.name
 
 
-class Label(models.Model):
-    name = models.CharField(unique=True, max_length=100)
-    create_date = models.DateTimeField(auto_now_add=True)
+# class Label(models.Model):
+#     name = models.CharField(unique=True, max_length=100)
+#     create_date = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self) -> str:
-        return self.name
+#     def __str__(self) -> str:
+#         return self.name
 
 
 class Task(models.Model):

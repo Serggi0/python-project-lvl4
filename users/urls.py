@@ -18,23 +18,17 @@ urlpatterns = [
     # страница удаления пользователя:
     path('<int:pk>/delete/', views.DeleteUser.as_view(), name='delete_user'),
 
-    # страница статусов:
-    # path('statuses/', views.StatusesView.as_view(), name='statuses'),
-    # path('statuses/create', views.CreateStatus.as_view(), name='create_status'),
-    # path('statuses/<int:pk>/update/', views.UpdateStatus.as_view(), name='update_status'),
-    # path('statuses/<int:pk>/delete/', views.DeleteStatus.as_view(), name='delete_status'),
-
     # страница задач:
     path('tasks/', views.TasksView.as_view(), name='tasks'),
     path('tasks/create', views.CreateTask.as_view(), name='create_task'),
     path('tasks/<int:pk>/update/', views.UpdateTask.as_view(), name='update_task'),
     path('tasks/<int:pk>/delete/', views.DeleteTask.as_view(), name='delete_task'),
 
-    # страница меток:
-    path('labels/', views.LabelsView.as_view(), name='labels'),
-    path('labels/create', views.CreateLabel.as_view(), name='create_label'),
-    path('labels/<int:pk>/update/', views.UpdateLabel.as_view(), name='update_label'),
-    path('labels/<int:pk>/delete/', views.DeleteLabel.as_view(), name='delete_label'),
+    # # страница меток:
+    # path('labels/', views.LabelsView.as_view(), name='labels'),
+    # path('labels/create', views.CreateLabel.as_view(), name='create_label'),
+    # path('labels/<int:pk>/update/', views.UpdateLabel.as_view(), name='update_label'),
+    # path('labels/<int:pk>/delete/', views.DeleteLabel.as_view(), name='delete_label'),
 
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

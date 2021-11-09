@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext as _
 
-from .models import Status
+from statuses.models import Status
 
 
 class StatusForm(forms.ModelForm):
@@ -17,17 +17,3 @@ class StatusForm(forms.ModelForm):
         #         'max_length': _("This name is too long."),
         #     },
         # }
-
-
-# class UpdateStatusForm(forms.ModelForm):
-#     class Meta:
-#         model = Status
-#         fields = ('name',)
-
-
-# class DeleteStatusForm(forms.ModelForm):
-#     class Meta:
-#         model = Status
-#         fields = ('name',)
-
-

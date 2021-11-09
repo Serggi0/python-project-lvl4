@@ -11,8 +11,6 @@ from django.urls.base import reverse_lazy
 from django.views import generic
 from django.views.generic.edit import DeleteView, UpdateView
 from django.utils import timezone
-
-from statuses.tables import  StatusesTable
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django_tables2 import SingleTableView
 from django.contrib.auth.decorators import login_required
@@ -22,17 +20,19 @@ from django.utils.translation import gettext as _
 from django.contrib import messages
 from django.shortcuts import redirect
 
-from statuses.forms import StatusForm
 from users.filters import TaskFilter
-from statuses.models import Status
+from labels.tables import LabelsTable
+from labels.forms import LabelForm
+from labels.models import Label
 from users.models import Task # todo
 
-class StatusesView(LoginRequiredMixin, SingleTableView):
+
+class LabelsView(LoginRequiredMixin, SingleTableView):
     login_url = 'login'
-    model = Status
-    table_class = StatusesTable
-    template_name = 'statuses/statuses.html'
-    extra_context = {'title': 'Statuses'}
+    model = Label
+    table_class = LabelsTable
+    template_name = 'labels/labels.html'
+    extra_context = {'title': 'Labels'}
 
     def handle_no_permission(self):
         messages.error(
@@ -42,16 +42,16 @@ class StatusesView(LoginRequiredMixin, SingleTableView):
         return redirect(self.login_url)
 
 
-class CreateStatus(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+class CreateLabel(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     login_url = 'login'
-    model = Status
-    form_class = StatusForm
+    model = Label
+    form_class = LabelForm
     template_name = 'users/create.html'
-    success_url = reverse_lazy('statuses:statuses')
-    success_message = _("%(name)s was created successfully")  # todo Перевод
+    success_url = reverse_lazy('labels:labels')
+    success_message = "%(name)s was created successfully"  # todo Перевод
     extra_context = {
-        'title': 'Create Status',
-        'button_name': 'Create'
+        'title': 'Create Label',
+        'button_name': 'Create label'
         }
 
     def handle_no_permission(self):
@@ -61,15 +61,14 @@ class CreateStatus(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
             )
         return redirect(self.login_url)
 
-
-class UpdateStatus(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class UpdateLabel(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     login_url = 'login'
-    model = Status
-    form_class = StatusForm
+    model = Label
+    form_class = LabelForm
     template_name = 'users/update.html'
-    success_url = reverse_lazy('statuses:statuses')
-    success_message = _("%(name)s was updated successfully")  # todo Перевод
-    extra_context = {'title': 'Update status'}
+    success_url = reverse_lazy('labels:labels')
+    success_message = "%(name)s was updated successfully"  # todo Перевод
+    extra_context = {'title': 'Update label'}
 
     def handle_no_permission(self):
         messages.error(
@@ -79,23 +78,23 @@ class UpdateStatus(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return redirect(self.login_url)
 
 
-class DeleteStatus(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class DeleteLabel(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     login_url = 'login'
-    model = Status
-    form_class = StatusForm
+    model = Label
+    form_class = LabelForm
     template_name = 'users/delete.html'
-    success_url = reverse_lazy('statuses:statuses')
-    success_message = _("Status was deleted successfully")  # todo Перевод
-    extra_context = {'title': 'Delete status'}
+    success_url = reverse_lazy('labels:labels')
+    success_message = "%(name)s was deleted successfully"  # todo Перевод
+    extra_context = {'title': 'Delete label'}
 
     def delete(self, request, *args, **kwargs):
         obj = self.get_object()
-        if Task.objects.filter(status=obj.pk):
+        if Task.objects.filter(label=obj.pk):
             messages.error(
                 self.request,
-                _('It is not possible to delete a status because it is being used')
+                _('It is not possible to delete a label because it is being used')
             )
-            return redirect(reverse_lazy('statuses'))
+            return redirect(reverse_lazy('labels'))
         messages.success(
             self.request,
             self.success_message

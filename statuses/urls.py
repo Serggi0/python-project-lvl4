@@ -1,7 +1,9 @@
 from django.urls import path
 from statuses import views
 
+
 app_name = 'statuses' #! установка пространства имен приложения
+
 urlpatterns = [
 
     # страница статусов:
