@@ -18,11 +18,11 @@ urlpatterns = [
     # страница удаления пользователя:
     path('<int:pk>/delete/', views.DeleteUser.as_view(), name='delete_user'),
 
-    # страница задач:
-    path('tasks/', views.TasksView.as_view(), name='tasks'),
-    path('tasks/create', views.CreateTask.as_view(), name='create_task'),
-    path('tasks/<int:pk>/update/', views.UpdateTask.as_view(), name='update_task'),
-    path('tasks/<int:pk>/delete/', views.DeleteTask.as_view(), name='delete_task'),
+    # # страница задач:
+    # path('tasks/', views.TasksView.as_view(), name='tasks'),
+    # path('tasks/create', views.CreateTask.as_view(), name='create_task'),
+    # path('tasks/<int:pk>/update/', views.UpdateTask.as_view(), name='update_task'),
+    # path('tasks/<int:pk>/delete/', views.DeleteTask.as_view(), name='delete_task'),
 
     # # страница меток:
     # path('labels/', views.LabelsView.as_view(), name='labels'),

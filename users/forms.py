@@ -54,31 +54,31 @@ class UpdateUserForm(UserChangeForm):
 #         fields = ('name',)
 
 
-class CreateTaskForm(forms.ModelForm):
-    class Meta:
-        model = Task
-        fields = ('name', 'description', 'author', 'status', 'executor', 'label')
-        # labels = {'name': _('Name'),}
-        # help_texts = {
-        #     'name': _('Some useful help text.'),
-        # }
-        # error_messages = {
-        #     'name': {
-        #         'max_length': _("This name is too long."),
-        #     },
-        # }
+# class CreateTaskForm(forms.ModelForm):
+#     class Meta:
+#         model = Task
+#         fields = ('name', 'description', 'author', 'status', 'executor', 'label')
+#         # labels = {'name': _('Name'),}
+#         # help_texts = {
+#         #     'name': _('Some useful help text.'),
+#         # }
+#         # error_messages = {
+#         #     'name': {
+#         #         'max_length': _("This name is too long."),
+#         #     },
+#         # }
 
 
-class UpdateTaskForm(forms.ModelForm):
-    class Meta:
-        model = Task
-        fields = ('name', 'description', 'author', 'status', 'executor', 'label')
+# class UpdateTaskForm(forms.ModelForm):
+#     class Meta:
+#         model = Task
+#         fields = ('name', 'description', 'author', 'status', 'executor', 'label')
 
 
-class DeleteTaskForm(forms.ModelForm):
-    class Meta:
-        model = Status
-        fields = ('name',)
+# class DeleteTaskForm(forms.ModelForm):
+#     class Meta:
+#         model = Status
+#         fields = ('name',)
 
 
 # class CreateLabelForm(forms.ModelForm):

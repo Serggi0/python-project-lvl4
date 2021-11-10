@@ -37,5 +37,6 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('statuses/', include('statuses.urls')),
     path('labels/', include('labels.urls')),
+    path('tasks/', include('tasks.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # ! настройка статических файлов

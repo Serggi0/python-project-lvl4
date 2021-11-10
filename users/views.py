@@ -9,13 +9,8 @@ from django.urls.base import reverse_lazy
 from django.views import generic
 from django.views.generic.edit import DeleteView, UpdateView
 from django.utils import timezone
-from statuses.forms import StatusForm
-from users.filters import TaskFilter
-from users.forms import CreateTaskForm, CreateUserForm, DeleteTaskForm, UpdateTaskForm, UpdateUserForm
-from users.tables import TasksTable, UsersTable
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from users.models import User, Label, Task
 from django_tables2 import SingleTableView
 # from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -24,6 +19,11 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext as _
 from django.contrib import messages
 from django.shortcuts import redirect
+
+from users.forms import CreateUserForm, UpdateUserForm
+from users.tables import UsersTable
+from users.models import User
+from tasks.models import Task
 
 
 class UsersView(SingleTableView):
@@ -136,46 +136,46 @@ class DeleteUser(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, D
 
 
 
-class TasksView(LoginRequiredMixin, FilterView, SingleTableView):
-    login_url = 'login'
-    model = Task
-    filterset_class = TaskFilter
-    table_class = TasksTable
-    template_name = 'users/tasks.html'
-    extra_context = {'title': 'Tasks'}
+# class TasksView(LoginRequiredMixin, FilterView, SingleTableView):
+#     login_url = 'login'
+#     model = Task
+#     filterset_class = TaskFilter
+#     table_class = TasksTable
+#     template_name = 'users/tasks.html'
+#     extra_context = {'title': 'Tasks'}
 
 
-class CreateTask(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
-    login_url = 'login'
-    model = Task
-    form_class = CreateTaskForm
-    template_name = 'users/create.html'
-    success_url = reverse_lazy('users:tasks')
-    success_message = "%(name)s was created successfully"  # todo Перевод
-    extra_context = {
-        'title': 'Create task',
-        'button_name': 'Create'
-        }
+# class CreateTask(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+#     login_url = 'login'
+#     model = Task
+#     form_class = CreateTaskForm
+#     template_name = 'users/create.html'
+#     success_url = reverse_lazy('users:tasks')
+#     success_message = "%(name)s was created successfully"  # todo Перевод
+#     extra_context = {
+#         'title': 'Create task',
+#         'button_name': 'Create'
+#         }
 
 
-class DeleteTask(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
-    login_url = 'login'
-    model = Task
-    form_class = DeleteTaskForm
-    template_name = 'users/delete.html'
-    success_url = reverse_lazy('users:tasks')
-    success_message = "%(name)s was deleted successfully"  # todo Перевод
-    extra_context = {'title': 'Delete task'}
+# class DeleteTask(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+#     login_url = 'login'
+#     model = Task
+#     form_class = DeleteTaskForm
+#     template_name = 'users/delete.html'
+#     success_url = reverse_lazy('users:tasks')
+#     success_message = "%(name)s was deleted successfully"  # todo Перевод
+#     extra_context = {'title': 'Delete task'}
 
 
-class UpdateTask(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    login_url = 'login'
-    model = Task
-    form_class = UpdateTaskForm
-    template_name = 'users/update.html'
-    success_url = reverse_lazy('users:tasks')
-    success_message = "%(name)s was updated successfully"  # todo Перевод
-    extra_context = {'title': 'Update task'}
+# class UpdateTask(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+#     login_url = 'login'
+#     model = Task
+#     form_class = UpdateTaskForm
+#     template_name = 'users/update.html'
+#     success_url = reverse_lazy('users:tasks')
+#     success_message = "%(name)s was updated successfully"  # todo Перевод
+#     extra_context = {'title': 'Update task'}
 
 
 # class LabelsView(LoginRequiredMixin, SingleTableView):

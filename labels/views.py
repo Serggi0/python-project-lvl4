@@ -20,11 +20,10 @@ from django.utils.translation import gettext as _
 from django.contrib import messages
 from django.shortcuts import redirect
 
-from users.filters import TaskFilter
 from labels.tables import LabelsTable
 from labels.forms import LabelForm
 from labels.models import Label
-from users.models import Task # todo
+from tasks.models import Task
 
 
 class LabelsView(LoginRequiredMixin, SingleTableView):
@@ -84,10 +83,13 @@ class DeleteLabel(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     form_class = LabelForm
     template_name = 'users/delete.html'
     success_url = reverse_lazy('labels:labels')
-    success_message = "%(name)s was deleted successfully"  # todo Перевод
+    success_message = "Label was deleted successfully"  # todo Перевод
     extra_context = {'title': 'Delete label'}
 
     def delete(self, request, *args, **kwargs):
+        '''
+        class DeletionMixin. Вызывается метод delete() и перенаправляется на URL после успешного удаления объекта
+        '''
         obj = self.get_object()
         if Task.objects.filter(label=obj.pk):
             messages.error(

@@ -23,9 +23,8 @@ from django.contrib import messages
 from django.shortcuts import redirect
 
 from statuses.forms import StatusForm
-from users.filters import TaskFilter
 from statuses.models import Status
-from users.models import Task # todo
+from tasks.models import Task
 
 class StatusesView(LoginRequiredMixin, SingleTableView):
     login_url = 'login'
