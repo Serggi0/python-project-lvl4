@@ -10,6 +10,7 @@ class TasksTable(tables.Table):
     <a href="{% url 'tasks:delete_task' record.pk %}" class="tbl_icon delete">Delete</a>
 '''
     links = tables.TemplateColumn(TEMPLATE, empty_values=(), verbose_name='')
+    name = tables.TemplateColumn('<a href="{% url \'tasks:view_task\' record.pk %}">{{ record.name }}</a>')
 
     class Meta:
         model = Task

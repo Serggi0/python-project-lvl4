@@ -26,32 +26,3 @@ class UsersTable(tables.Table):
     # link_update = tables.LinkColumn('users:update_user', text=_('Update'), args=[A('pk')], verbose_name='')
     # link_delete = tables.LinkColumn('users:delete_user', text=_('Delete'), args=[A('pk')], verbose_name='')
     #! https://coderedirect.com/questions/365855/django-tables2-create-extra-column-with-links
-
-
-    class Meta:
-        model = Status
-        template_name = "django_tables2/bootstrap4.html"
-        fields = ('id', 'name', 'create_date', 'links')
-        attrs = {
-            'button_name': 'Create',
-            'class': 'table table-striped'
-        }
-
-
-# class TasksTable(tables.Table):
-#     TEMPLATE = '''
-#     <a href="{% url 'users:update_task' record.pk %}" class="tbl_icon edit">Edit</a>
-#     <br>
-#     <a href="{% url 'users:delete_task' record.pk %}" class="tbl_icon delete">Delete</a>
-# '''
-#     links = tables.TemplateColumn(TEMPLATE, empty_values=(), verbose_name='')
-
-#     class Meta:
-#         model = Task
-#         template_name = "django_tables2/bootstrap4.html"
-#         fields = ('id', 'name', 'description', 'author', 'executor', 'status', 'label', 'create_date', 'links')
-#         attrs = {
-#             'class': 'table table-striped'
-#         }
-
-

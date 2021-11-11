@@ -11,7 +11,6 @@ class User(AbstractUser):
     # last_name = models.CharField(max_length=75)
     # username = models.CharField(unique=True, max_length=75)
     full_name = models.CharField(max_length=150, blank=True, null=True)
-    # # task_id = 
     # create_date = models.DateTimeField(auto_now_add=True)
     # # self_task = models.BooleanField(default=True)
 
@@ -28,33 +27,3 @@ class User(AbstractUser):
     #     return reverse(name, kwargs={'user_id': self.pk})
     # централизованное управление 'user_id' в urls  и templates
     # https://youtu.be/CFO4aAsUuUk?list=PLA0M1Bcd0w8xO_39zZll2u1lz_Q-Mwn1F&t=732
-
-
-# class Status(models.Model):
-#     name = models.CharField(unique=True, max_length=100)
-#     create_date = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self) -> str:
-#         return self.name
-
-
-# class Label(models.Model):
-#     name = models.CharField(unique=True, max_length=100)
-#     create_date = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self) -> str:
-#         return self.name
-
-
-# class Task(models.Model):
-#     name = models.CharField(max_length=250)
-#     description = models.CharField(max_length=250)
-#     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author', null=True)
-#     # https://djangodoc.ru/3.1/ref/models/fields/#django.db.models.ForeignKey.related_name
-#     executor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='executor', null=True, blank=True)
-#     label = models.ManyToManyField(Label, blank=True)
-#     status = models.ForeignKey(Status, on_delete=models.PROTECT, null=True)
-#     create_date = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self) -> str:
-#         return self.name
