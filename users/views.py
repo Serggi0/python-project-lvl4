@@ -47,7 +47,9 @@ class CreateUser(SuccessMessageMixin, generic.CreateView):
     #     return dict(list(context.items()) + list(c_def.items()))
 
 
-class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
+class UpdateUser(
+    LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView
+):
     login_url = 'login'
     model = User
     # fields = ['username', 'first_name', 'last_name', 'password']
@@ -85,7 +87,9 @@ class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, U
 #     return HttpResponse(f'Удаление пользователя {user_id}')
 
 
-class DeleteUser(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+class DeleteUser(
+    LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView
+):
     login_url = 'login'
     model = User
     template_name = 'users/delete.html'
@@ -103,9 +107,14 @@ class DeleteUser(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, D
 
     def delete(self, request, *args, **kwargs):
         '''
-        class DeletionMixin. Вызывается метод delete() и перенаправляется на URL после успешного удаления объекта
+        class DeletionMixin. Вызывается метод delete()
+        и перенаправляется на URL после успешного удаления объекта
         '''
-        if Task.objects.filter(author=self.request.user.pk) or Task.objects.filter(executor=self.request.user.pk):
+        if Task.objects.filter(
+            author=self.request.user.pk
+        ) or Task.objects.filter(
+            executor=self.request.user.pk
+        ):
             messages.error(
                 self.request,
                 user_messages.ERROR_MESSAGE_NOT_POSSIBLE_DELETE_USER
