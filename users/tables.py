@@ -1,6 +1,5 @@
 import django_tables2 as tables
 from users.models import User
-from django.utils.translation import ugettext as _
 
 
 # https://overcoder.net/q/262100/django-tables2-linkcolumn-%D0%BD%D0%B5%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%BE-%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D0%BE%D0%B2-%D0%B2-%D0%BE%D0%B4%D0%BD%D0%BE%D0%B9-%D1%8F%D1%87%D0%B5%D0%B9%D0%BA%D0%B5

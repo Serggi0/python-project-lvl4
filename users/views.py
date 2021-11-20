@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 
 from task_manager import user_messages
-from users.forms import CreateUserForm, UpdateUserForm
+from users.forms import UserForm
 from users.tables import UsersTable
 from users.models import User
 from tasks.models import Task
@@ -30,7 +30,7 @@ class UsersView(SingleTableView):
 
 
 class CreateUser(SuccessMessageMixin, generic.CreateView):
-    form_class = CreateUserForm
+    form_class = UserForm
     template_name = 'users/create.html'
     success_url = reverse_lazy('login')
     # https://youtu.be/QK4qbVyY7oU?list=PLA0M1Bcd0w8xO_39zZll2u1lz_Q-Mwn1F
@@ -52,8 +52,7 @@ class UpdateUser(
 ):
     login_url = 'login'
     model = User
-    # fields = ['username', 'first_name', 'last_name', 'password']
-    form_class = UpdateUserForm
+    form_class = UserForm
     template_name = 'users/update.html'
     success_url = reverse_lazy('users:users')
     extra_context = {'title': 'Update user'}
@@ -69,7 +68,8 @@ class UpdateUser(
 
     def test_func(self):
         obj = self.get_object()
-        if self.request.user.is_authenticated and obj.pk != self.request.user.pk:
+        if (self.request.user.is_authenticated
+            and obj.pk != self.request.user.pk):
             self.error_message = user_messages.ERROR_MESSAGE_NOT_RIGHTS
             self.login_url = reverse_lazy('users:users')
             return False
