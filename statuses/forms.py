@@ -1,5 +1,4 @@
 from django import forms
-from django.utils.translation import gettext as _
 
 from statuses.models import Status
 
@@ -7,7 +6,7 @@ from statuses.models import Status
 class StatusForm(forms.ModelForm):
     class Meta:
         model = Status
-        fields = ('name',)
+        fields = ['name']
         # labels = {'name': _('Name'),}
         # help_texts = {
         #     'name': _('Some useful help text.'),

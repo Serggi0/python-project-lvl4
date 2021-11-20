@@ -1,6 +1,5 @@
-from django_tables2.utils import A
 import django_tables2 as tables
-from .models import *
+from users.models import User
 from django.utils.translation import ugettext as _
 
 
@@ -13,6 +12,8 @@ class UsersTable(tables.Table):
     <br>
     <a href="{% url 'users:delete_user' record.pk %}" class="tbl_icon delete">Delete</a>
 '''
+    # ! https://coderedirect.com/questions/365855/django-tables2-create-extra-column-with-links
+
     links = tables.TemplateColumn(TEMPLATE, empty_values=(), verbose_name='')
 
     class Meta:
@@ -22,7 +23,4 @@ class UsersTable(tables.Table):
         attrs = {
             'class': 'table table-striped'
         }
-        #? full_name translate
-    # link_update = tables.LinkColumn('users:update_user', text=_('Update'), args=[A('pk')], verbose_name='')
-    # link_delete = tables.LinkColumn('users:delete_user', text=_('Delete'), args=[A('pk')], verbose_name='')
-    #! https://coderedirect.com/questions/365855/django-tables2-create-extra-column-with-links
+

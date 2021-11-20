@@ -15,11 +15,11 @@ import os
 from dotenv import load_dotenv
 
 from django.utils.translation import gettext_lazy as _
-#! выбор локалей
-#! https://habr.com/ru/company/ruvds/blog/498452/
-#! django.core.exceptions.AppRegistryNotReady: The translation infrastructure
-#! cannot be initialized before the apps registry is ready. Check that you
-#! don't make non-lazy gettext calls at import time.
+# ! выбор локалей
+# ! https://habr.com/ru/company/ruvds/blog/498452/
+# ! django.core.exceptions.AppRegistryNotReady: The translation infrastructure
+# ! cannot be initialized before the apps registry is ready. Check that you
+# ! don't make non-lazy gettext calls at import time.
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -71,7 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',  #! включение перевода
+    'django.middleware.locale.LocaleMiddleware',  # ! включение перевода
 ]
 
 ROOT_URLCONF = 'task_manager.urls'
@@ -111,16 +111,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # noqa
     },
 ]
 
@@ -153,7 +153,7 @@ STATICFILES_DIRS = [
     # '/var/www/static/', # ! папка для сервера?
 ]
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-#! сборная папка для файлов в режиме эксплуатации
+# ! сборная папка для файлов в режиме эксплуатации
 
 
 # Default primary key field type

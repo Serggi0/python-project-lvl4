@@ -1,20 +1,48 @@
 from django.db import models
-from django.urls.base import reverse
 from django.utils.translation import gettext_lazy as _
+
 from users.models import User
 from statuses.models import Status
 from labels.models import Label
 
 
 class Task(models.Model):
-    name = models.CharField(max_length=250)
-    description = models.CharField(max_length=250)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='author')
-    # https://djangodoc.ru/3.1/ref/models/fields/#django.db.models.ForeignKey.related_name
-    executor = models.ForeignKey(User, on_delete=models.PROTECT, related_name='executor', null=True, blank=True)
-    label = models.ManyToManyField(Label, blank=True)
-    status = models.ForeignKey(Status, on_delete=models.PROTECT)
-    create_date = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(
+        unique=True, max_length=250,
+        verbose_name=_('Name')
+    )
+    description = models.CharField(
+        max_length=250, verbose_name=_('Description'),
+        blank=True,
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name='author',
+        verbose_name=_('Author')
+    )
+    executor = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name='executor',
+        null=True,
+        blank=True,
+        verbose_name=_('Executor')
+    )
+    label = models.ManyToManyField(
+        Label,
+        blank=True,
+        verbose_name=_('Label')
+    )
+    status = models.ForeignKey(
+        Status,
+        on_delete=models.PROTECT,
+        verbose_name=_('Status')
+    )
+    create_date = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=_('Create date')
+    )
 
     def __str__(self) -> str:
         return self.name

@@ -1,7 +1,6 @@
-from django_tables2.utils import A
 import django_tables2 as tables
+
 from labels.models import Label
-from django.utils.translation import ugettext as _
 
 
 class LabelsTable(tables.Table):

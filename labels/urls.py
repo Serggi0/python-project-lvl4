@@ -1,8 +1,9 @@
 from django.urls import path
+
 from labels import views
 
 
-app_name = 'labels' #! установка пространства имен приложения
+app_name = 'labels'  # ! установка пространства имен приложения
 
 urlpatterns = [
 

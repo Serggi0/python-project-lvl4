@@ -12,12 +12,14 @@
 	<a href="{% url 'tasks:create_task' %}">{% translate 'Create task' %}</a>
 	
 	<div class="card mb-3">
+		<div class="card-body bg-light">
 		<form method="get" class="form">
 			{{ filter.form.as_p }}
 			{% buttons %}
 			<button type="submit" class="btn btn-primary">{% translate 'See' %}</button>
 			{% endbuttons %}
 		</form>
+		</div>
 	</div>
 	
 	{% render_table table %}

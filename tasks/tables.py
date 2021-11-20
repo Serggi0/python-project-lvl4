@@ -1,7 +1,7 @@
-from django_tables2.utils import A
 import django_tables2 as tables
+
 from tasks.models import Task
-from django.utils.translation import ugettext as _
+
 
 class TasksTable(tables.Table):
     TEMPLATE = '''
@@ -15,7 +15,7 @@ class TasksTable(tables.Table):
     class Meta:
         model = Task
         template_name = "django_tables2/bootstrap4.html"
-        fields = ('id', 'name', 'description', 'author', 'executor', 'status', 'label', 'create_date', 'links')
+        fields = ('id', 'name', 'status', 'author', 'executor', 'create_date', 'links')
         attrs = {
             'class': 'table table-striped'
         }

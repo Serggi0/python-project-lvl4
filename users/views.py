@@ -1,25 +1,13 @@
-from django.contrib.auth.views import LoginView
-from django.db import models
-from django.db.models import fields
-from django.http import HttpResponseRedirect
-from django.http.response import HttpResponse
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
 from django.urls.base import reverse_lazy
 from django.views import generic
 from django.views.generic.edit import DeleteView, UpdateView
-from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
 from django_tables2 import SingleTableView
-# from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django_filters.views import FilterView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.utils.translation import gettext as _
 from django.contrib import messages
 from django.shortcuts import redirect
 
+from task_manager import user_messages
 from users.forms import CreateUserForm, UpdateUserForm
 from users.tables import UsersTable
 from users.models import User
@@ -35,7 +23,8 @@ class UsersView(SingleTableView):
     # context_object_name = 'all_users_list'
     # замена названия коллекции для html-файла вместо дефолтного object_list
     extra_context = {'title': 'Users'}
-    #! # добавление заголовка страницы через атрибут extra_context
+    # добавление заголовка страницы через атрибут extra_context
+
     # def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
     #     return super().get_context_data(**kwargs)
 
@@ -45,12 +34,12 @@ class CreateUser(SuccessMessageMixin, generic.CreateView):
     template_name = 'users/create.html'
     success_url = reverse_lazy('login')
     # https://youtu.be/QK4qbVyY7oU?list=PLA0M1Bcd0w8xO_39zZll2u1lz_Q-Mwn1F
-    success_message = "%(username)s was created successfully"  # todo Перевод
+    success_message = user_messages.SUCCES_MESSAGE_CREATE_USER
     # ! https://djangodoc.ru/3.1/ref/contrib/messages/
     extra_context = {
         'title': 'Registration',
         'button_name': 'Register'
-        }
+    }
 
     # def get_context_data(self, *, object_list=None, **kwargs):
     #     context = super().get_context_data(**kwargs)
@@ -66,20 +55,20 @@ class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, U
     template_name = 'users/update.html'
     success_url = reverse_lazy('users:users')
     extra_context = {'title': 'Update user'}
-    success_message = _('%(username)s was updated successfully')
-    error_message = _('You are not logged in! Please log in.')
+    success_message = user_messages.SUCCES_MESSAGE_UPDATE_USER
+    error_message = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
     def handle_no_permission(self):
         messages.error(
             self.request,
             self.error_message
-            )
+        )
         return redirect(self.login_url)
 
     def test_func(self):
         obj = self.get_object()
         if self.request.user.is_authenticated and obj.pk != self.request.user.pk:
-            self.error_message = _("You don't have the rights to change another user.")
+            self.error_message = user_messages.ERROR_MESSAGE_NOT_RIGHTS
             self.login_url = reverse_lazy('users:users')
             return False
         return True
@@ -102,33 +91,37 @@ class DeleteUser(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, D
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users:users')
     extra_context = {'title': 'Delete user'}
-    success_message = _('User has been successfully deleted')
-    error_message = _('You are not logged in! Please log in.')
+    success_message = user_messages.SUCCES_MESSAGE_DELETE_USER
+    error_message = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
     def handle_no_permission(self):
         messages.error(
             self.request,
             self.error_message
-            )
+        )
         return redirect(self.login_url)
 
     def delete(self, request, *args, **kwargs):
+        '''
+        class DeletionMixin. Вызывается метод delete() и перенаправляется на URL после успешного удаления объекта
+        '''
         if Task.objects.filter(author=self.request.user.pk) or Task.objects.filter(executor=self.request.user.pk):
             messages.error(
                 self.request,
-                _('It is not possible to delete a user because it is being used')
-                )
-            return redirect(reverse_lazy('users'))
+                user_messages.ERROR_MESSAGE_NOT_POSSIBLE_DELETE_USER
+            )
+            return redirect(reverse_lazy('users:users'))
         messages.success(
             self.request,
             self.success_message
-            )
+        )
         return super().delete(request, *args, **kwargs)
 
     def test_func(self):
-        obj = self.get_object()
-        if self.request.user.is_authenticated and obj.pk != self.request.user.pk:
-            self.error_message = _("You don't have the rights to delete another user.")
+        self.object = self.get_object()
+        if self.object.pk == self.request.user.pk:
+            return True
+        else:
+            self.error_message = user_messages.ERROR_MESSAGE_NOT_RIGHTS
             self.login_url = reverse_lazy('users:users')
             return False
-        return True
