@@ -1,16 +1,24 @@
 import django_tables2 as tables
-
+from django.utils.translation import ugettext as _
 from tasks.models import Task
 
 
 class TasksTable(tables.Table):
     TEMPLATE = '''
-    <a href="{% url 'tasks:update_task' record.pk %}" class="tbl_icon edit">Edit</a>
+    <a href="{% url 'tasks:update_task' record.pk %}" class="tbl_icon edit">{{ edit }}</a>
     <br>
-    <a href="{% url 'tasks:delete_task' record.pk %}" class="tbl_icon delete">Delete</a>
+    <a href="{% url 'tasks:delete_task' record.pk %}" class="tbl_icon delete">{{ delete }}</a>
 '''
-    links = tables.TemplateColumn(TEMPLATE, empty_values=(), verbose_name='')
-    name = tables.TemplateColumn('<a href="{% url \'tasks:view_task\' record.pk %}">{{ record.name }}</a>')
+    links = tables.TemplateColumn(
+        TEMPLATE,
+        empty_values=(),
+        verbose_name='',
+        extra_context={'edit': _('Edit'), 'delete': _('Delete')}
+    )
+
+    name = tables.TemplateColumn(
+        '<a href="{% url \'tasks:view_task\' record.pk %}">{{ record.name }}</a>'
+    )
 
     class Meta:
         model = Task

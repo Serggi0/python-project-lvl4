@@ -1,16 +1,20 @@
 import django_tables2 as tables
-
 from django.utils.translation import ugettext as _
 from statuses.models import Status
 
 
 class StatusesTable(tables.Table):
     TEMPLATE = '''
-    <a href="{% url 'statuses:update_status' record.pk %}" class="tbl_icon edit">Edit</a>  # Noqa
+    <a href="{% url 'statuses:update_status' record.pk %}" class="tbl_icon edit">{{ edit }}</a>
     <br>
-    <a href="{% url 'statuses:delete_status' record.pk %}" class="tbl_icon delete">Delete</a>  # 
+    <a href="{% url 'statuses:delete_status' record.pk %}" class="tbl_icon delete">{{ delete }}</a>
 '''
-    links = tables.TemplateColumn(TEMPLATE, empty_values=(), verbose_name='')
+    links = tables.TemplateColumn(
+        TEMPLATE,
+        empty_values=(),
+        verbose_name='',
+        extra_context={'edit': _('Edit'), 'delete': _('Delete')}
+    )
 
     class Meta:
         model = Status

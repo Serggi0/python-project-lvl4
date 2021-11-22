@@ -8,6 +8,7 @@ from django_filters.views import FilterView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.utils.translation import gettext as _
 
 from task_manager import user_messages
 from tasks.models import Task
@@ -22,7 +23,7 @@ class TasksView(LoginRequiredMixin, FilterView, SingleTableView):
     filterset_class = TaskFilter
     table_class = TasksTable
     template_name = 'tasks/tasks.html'
-    extra_context = {'title': 'Tasks'}
+    extra_context = {'title': _('Tasks')}
 
     def handle_no_permission(self):
         '''
@@ -44,7 +45,7 @@ class CreateTask(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     success_message = user_messages.SUCCES_MESSAGE_CREATE_TASK
     extra_context = {
         'title': 'Create task',
-        'button_name': 'Create'
+        'button_name': _('Create')
     }
 
     def form_valid(self, form):
@@ -70,7 +71,7 @@ class UpdateTask(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'users/update.html'
     success_url = reverse_lazy('tasks:tasks')
     success_message = user_messages.SUCCES_MESSAGE_UPDATE_TASK
-    extra_context = {'title': 'Update task'}
+    extra_context = {'title': _('Update task')}
 
     def handle_no_permission(self):
         messages.error(
@@ -84,7 +85,7 @@ class TaskView(LoginRequiredMixin, SuccessMessageMixin, DetailView):
     login_url = 'login'
     model = Task
     template_name = 'tasks/view_task.html'
-    extra_context = {'title': 'View task'}
+    extra_context = {'title': _('Tasks')}
 
     def handle_no_permission(self):
         messages.error(
@@ -103,7 +104,7 @@ class DeleteTask(
     success_url = reverse_lazy('tasks:tasks')
     success_message = user_messages.SUCCES_MESSAGE_DELETE_TASK
     error_message = user_messages.ERROR_MESSAGE_NOT_LOGGED
-    extra_context = {'title': 'Delete task'}
+    extra_context = {'title': _('Delete task')}
 
     def handle_no_permission(self):
         messages.error(

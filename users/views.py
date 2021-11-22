@@ -6,6 +6,7 @@ from django_tables2 import SingleTableView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.utils.translation import ugettext as _
 
 from task_manager import user_messages
 from users.forms import UserForm
@@ -22,7 +23,7 @@ class UsersView(SingleTableView):
     # замена имени шаблона вместо дефолтного 'users_list'
     # context_object_name = 'all_users_list'
     # замена названия коллекции для html-файла вместо дефолтного object_list
-    extra_context = {'title': 'Users'}
+    extra_context = {'title': _('Users')}
     # добавление заголовка страницы через атрибут extra_context
 
     # def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
@@ -38,7 +39,7 @@ class CreateUser(SuccessMessageMixin, generic.CreateView):
     # ! https://djangodoc.ru/3.1/ref/contrib/messages/
     extra_context = {
         'title': 'Registration',
-        'button_name': 'Register'
+        'button_name': _('Register')
     }
 
     # def get_context_data(self, *, object_list=None, **kwargs):
@@ -55,7 +56,7 @@ class UpdateUser(
     form_class = UserForm
     template_name = 'users/update.html'
     success_url = reverse_lazy('users:users')
-    extra_context = {'title': 'Update user'}
+    extra_context = {'title': _('Update user')}
     success_message = user_messages.SUCCES_MESSAGE_UPDATE_USER
     error_message = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
@@ -94,7 +95,7 @@ class DeleteUser(
     model = User
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users:users')
-    extra_context = {'title': 'Delete user'}
+    extra_context = {'title': _('Delete user')}
     success_message = user_messages.SUCCES_MESSAGE_DELETE_USER
     error_message = user_messages.ERROR_MESSAGE_NOT_LOGGED
 

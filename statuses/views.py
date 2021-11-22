@@ -40,8 +40,8 @@ class CreateStatus(
     success_url = reverse_lazy('statuses:statuses')
     success_message = user_messages.SUCCES_MESSAGE_CREATE_STATUS
     extra_context = {
-        'title': 'Create Status',
-        'button_name': 'Create'
+        'title': _('Create Status'),
+        'button_name': _('Create')
     }
 
     def handle_no_permission(self):
@@ -59,7 +59,7 @@ class UpdateStatus(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'users/update.html'
     success_url = reverse_lazy('statuses:statuses')
     success_message = user_messages.SUCCES_MESSAGE_UPDATE_STATUS
-    extra_context = {'title': 'Update status'}
+    extra_context = {'title': _('Update status')}
 
     def handle_no_permission(self):
         messages.error(
@@ -76,7 +76,7 @@ class DeleteStatus(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = 'users/delete.html'
     success_url = reverse_lazy('statuses:statuses')
     success_message = user_messages.SUCCES_MESSAGE_DELETE_STATUS  # todo Перевод
-    extra_context = {'title': 'Delete status'}
+    extra_context = {'title': _('Delete status')}
 
     def delete(self, request, *args, **kwargs):
         obj = self.get_object()

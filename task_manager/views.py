@@ -10,7 +10,7 @@ from django.contrib import messages
 
 def index(request):
     return render(request, 'home.html', context={
-        'title': 'Task manager',
+        'title': _('Task manager'),
     })
 
 # def login(request):
@@ -20,8 +20,8 @@ def index(request):
 class LoginUser(LoginView):
     form_class = AuthenticationForm  # стандартная форма авторизации
     template_name = 'users/login.html'
-    extra_context = {'title': 'Entrance'}
-    error_message = '!!!'
+    extra_context = {'title': _('Entrance')}
+
     # _("Please enter a correct %(username)s and password. Note that both ")
 
     # def get_invalid_login_error(self):
