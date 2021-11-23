@@ -31,7 +31,7 @@ ERROR_MESSAGE_DELETED_TASK = _(
     'A task can only be deleted by its author'
 )
 ERROR_MESSAGE_NOT_POSSIBLE_DELETE_USER = _(
-    'It is not possible to delete a user because it is being used' # todo 
+    'It is not possible to delete a user because it is being used'
 )
 ERROR_MESSAGE_NOT_POSSIBLE_DELETE_STATUS = _(
     'It is not possible to delete a status because it is being used'
