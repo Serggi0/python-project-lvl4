@@ -5,5 +5,15 @@
 {% load bootstrap4 %}
 
 {% block content %}
-    <!-- <h2>{% translate 'Hello' %}</h2> -->
+<div class="container wrapper flex-grow-1">
+  <div class="card">
+    <div class="card-body p-5 bg-light">
+      <div class="display-4">{% translate 'Hello' %}{% if user.is_authenticated %}, {{ user.username }}!{% endif %}</div>
+      <p class="lead">{% translate 'About task manager' %}</p>
+      <hr>
+      <a class="btn btn-primary btn-lg" href="https://ru.hexlet.io">{% translate 'Learn more' %}</a>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

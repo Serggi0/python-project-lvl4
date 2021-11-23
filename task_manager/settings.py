@@ -10,16 +10,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from pathlib import Path
 import os
+import rollbar
+from pathlib import Path
 from dotenv import load_dotenv
 
 from django.utils.translation import gettext_lazy as _
-#! выбор локалей
-#! https://habr.com/ru/company/ruvds/blog/498452/
-#! django.core.exceptions.AppRegistryNotReady: The translation infrastructure
-#! cannot be initialized before the apps registry is ready. Check that you
-#! don't make non-lazy gettext calls at import time.
+# ! выбор локалей
+# ! https://habr.com/ru/company/ruvds/blog/498452/
+# ! django.core.exceptions.AppRegistryNotReady: The translation infrastructure
+# ! cannot be initialized before the apps registry is ready. Check that you
+# ! don't make non-lazy gettext calls at import time.
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,10 +39,20 @@ load_dotenv(dotenv_path=env_path)
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'todo-shka.herokuapp.com']
+
+
+ROLLBAR = {
+    'access_token': os.getenv('POST_SERVER_ITEM_ACCESS_TOKEN'),
+    'environment': 'development' if DEBUG else 'production',
+    'root': BASE_DIR,
+}
+
+rollbar.init(**ROLLBAR)
 
 
 # Application definition
@@ -57,6 +68,9 @@ INSTALLED_APPS = [
     'django_tables2',
     'django_filters',
     'task_manager',
+    'statuses',
+    'labels',
+    'tasks',
     'users',
 ]
 
@@ -68,7 +82,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',  #! включение перевода
+    'django.middleware.locale.LocaleMiddleware',  # ! включение перевода
+    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
 ]
 
 ROOT_URLCONF = 'task_manager.urls'
@@ -108,22 +123,26 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # noqa
     },
 ]
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
+
+LOCALE_PATHS = [
+    './locale',  # !
+]
 
 LANGUAGE_CODE = 'ru'
 LANGUAGES = (
@@ -150,7 +169,7 @@ STATICFILES_DIRS = [
     # '/var/www/static/', # ! папка для сервера?
 ]
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-#! сборная папка для файлов в режиме эксплуатации
+# ! сборная папка для файлов в режиме эксплуатации
 
 
 # Default primary key field type
@@ -159,3 +178,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+
+

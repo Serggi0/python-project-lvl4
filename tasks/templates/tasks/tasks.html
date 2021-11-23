@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load render_table from django_tables2 %}
+
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<div class="container wrapper flex-grow-1">
+	<h1 class="my-4">{% translate title %}</h1>
+	<a href="{% url 'tasks:create_task' %}">{% translate 'Create task' %}</a>
+	
+	<div class="card mb-3">
+		<div class="card-body bg-light">
+		<form method="get" class="form">
+			{{ filter.form.as_p }}
+			{% buttons %}
+			<button type="submit" class="btn btn-primary">{% translate 'See' %}</button>
+			{% endbuttons %}
+		</form>
+		</div>
+	</div>
+	
+	{% render_table table %}
+</div>
+
+{% endblock %}

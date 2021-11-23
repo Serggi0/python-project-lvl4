@@ -4,16 +4,17 @@
 {% load bootstrap4 %}
 
 {% block content %}
-<h2>{% translate title %}</h2>
+<div class="container wrapper flex-grow-1">
+	<h1 class="my-4">{% translate title %}</h1>
 
-<form method="post" class="form">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {% buttons %}
-    <button type="submit" class="btn btn-primary">{% translate 'Enter' %}</button>
-    {% endbuttons %}
-</form>
+    <form method="post" class="form">
+        {% csrf_token %}
+
+        {% bootstrap_form form %}
+
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">{% translate 'Enter' %}</button>
+        {% endbuttons %}
+    </form>
+</div>
 {% endblock %}
-
-
-<!-- {% bootstrap_button _('Enter') button_type='submit' button_class='btn-primary' %}-->

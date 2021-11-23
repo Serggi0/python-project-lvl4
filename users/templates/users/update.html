@@ -4,17 +4,16 @@
 {% load bootstrap4 %}
 
 {% block content %}
-<h2>{% translate title %}</h2>
 
-<!-- {% if user.is_authenticated %} -->
-    <form method="post">
+<div class="container wrapper flex-grow-1">
+	<h1 class="my-4">{% translate title %}</h1>
+    <form method="post" class="form">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">{% translate 'Update' %}</button>
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">{% translate 'Update' %}</button>
+        {% endbuttons %}
     </form>
-<!-- {% else %}
-    Login is required требуется логин-->
-
-{% endif %}
+</div>
 
 {% endblock %}

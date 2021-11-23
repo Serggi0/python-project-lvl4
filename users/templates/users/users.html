@@ -7,9 +7,9 @@
 
 {% block content %}
 
-	<h2>{% translate title %}</h2>
-	<div class="container">
-		{% render_table table %}
-	</div>
+<div class="container wrapper flex-grow-1">
+	<h1 class="my-4">{% translate title %}</h1>
+	{% render_table table %}
+</div>
 
 {% endblock %}

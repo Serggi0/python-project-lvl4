@@ -13,15 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django import urls
+
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
-from task_manager import views
 from django.conf import settings
 from django.conf.urls.static import static
 
-import users  #?
+from task_manager import views
 
 
 urlpatterns = [
@@ -32,8 +31,11 @@ urlpatterns = [
     path('login/', views.LoginUser.as_view(), name='login'),
 
     # страница завершения сессии (выхода)
-    path('logout/', views.logout_user, name='logout'),
+    path('logout/', views.LogoutUser.as_view(), name='logout'),
 
     path('users/', include('users.urls')),
+    path('statuses/', include('statuses.urls')),
+    path('labels/', include('labels.urls')),
+    path('tasks/', include('tasks.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # ! настройка статических файлов
