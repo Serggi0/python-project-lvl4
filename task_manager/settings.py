@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 import django_heroku
-import dj_database_url
+
 import rollbar
 from pathlib import Path
 from dotenv import load_dotenv
@@ -143,9 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LOCALE_PATHS = [
-    './locale',  # !
-]
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'), ]
 
 LANGUAGE_CODE = 'ru'
 LANGUAGES = (
