@@ -16,6 +16,6 @@ compiletranslate:
 
 
 test:
-	poetry run pytest -v --cov=task_manager tests/ --cov-report xml
+	poetry run coverage run manage.py test
 
 .PHONY: install lint test translate compiletranslate
