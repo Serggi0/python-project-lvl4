@@ -69,8 +69,7 @@ class UpdateUser(
 
     def test_func(self):
         obj = self.get_object()
-        if (self.request.user.is_authenticated
-            and obj.pk != self.request.user.pk):
+        if self.request.user.is_authenticated and obj.pk != self.request.user.pk:
             self.error_message = user_messages.ERROR_MESSAGE_NOT_RIGHTS
             self.login_url = reverse_lazy('users:users')
             return False
