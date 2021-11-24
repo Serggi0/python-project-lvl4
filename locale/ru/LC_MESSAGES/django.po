@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 14:10+0000\n"
+"POT-Creation-Date: 2021-11-23 13:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,11 +84,11 @@ msgstr "Изменить статус"
 msgid "Delete status"
 msgstr "Удалить статус"
 
-#: task_manager/settings.py:133
+#: task_manager/settings.py:149
 msgid "English"
 msgstr "Английский"
 
-#: task_manager/settings.py:134
+#: task_manager/settings.py:150
 msgid "Russian"
 msgstr "Русский"
 
