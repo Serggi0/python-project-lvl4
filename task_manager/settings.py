@@ -48,15 +48,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'todo-shka.herokuapp.com']
 
 
-ROLLBAR = {
-    'access_token': os.getenv('POST_SERVER_ITEM_ACCESS_TOKEN'),
-    'environment': 'development' if DEBUG else 'production',
-    'root': BASE_DIR,
-}
-
-rollbar.init(**ROLLBAR)
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -179,5 +170,13 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+ROLLBAR = {
+    'access_token': os.getenv('POST_SERVER_ITEM_ACCESS_TOKEN'),
+    'environment': 'development' if DEBUG else 'production',
+    'root': BASE_DIR,
+}
+
+rollbar.init(**ROLLBAR)
 
 django_heroku.settings(locals())
