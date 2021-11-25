@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 import django_heroku
 
-import rollbar
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -35,12 +34,12 @@ LOCALE_PATHS = (
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-load_dotenv()  # ! взять переменные среды из .env.
-env_path = '.env'
-load_dotenv(dotenv_path=env_path)
+# load_dotenv()
+env_path = os.path.join(BASE_DIR, '.env')
+load_dotenv(dotenv_path=env_path)  # ! взять переменные среды из .env.
+
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -171,12 +170,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
-ROLLBAR = {
-    'access_token': os.getenv('POST_SERVER_ITEM_ACCESS_TOKEN'),
-    'environment': 'development' if DEBUG else 'production',
-    'root': BASE_DIR,
-}
+# import rollbar
+# ROLLBAR = {
+#     'access_token': os.getenv('POST_SERVER_ITEM_ACCESS_TOKEN'),
+#     'environment': 'development' if DEBUG else 'production',
+#     'root': BASE_DIR,
+# }
 
-rollbar.init(**ROLLBAR)
+# rollbar.init(**ROLLBAR)
+# https://docs.rollbar.com/docs/django
 
 django_heroku.settings(locals())
