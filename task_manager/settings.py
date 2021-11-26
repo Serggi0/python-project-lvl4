@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 import django_heroku
 import dj_database_url
+import rollbar
 
 from pathlib import Path
 from dotenv import load_dotenv
@@ -175,7 +176,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
-import rollbar
+
 ROLLBAR = {
     'access_token': os.getenv('POST_SERVER_ITEM_ACCESS_TOKEN'),
     'environment': 'development' if DEBUG else 'production',
