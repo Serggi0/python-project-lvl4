@@ -44,7 +44,7 @@ load_dotenv(dotenv_path=env_path)  # ! взять переменные сред�
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG', 'False')
+DEBUG = bool(os.getenv('DJANGO_DEBUG', True))
 # DEBUG = True
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'todo-shka.herokuapp.com')
@@ -186,5 +186,5 @@ ROLLBAR = {
 rollbar.init(**ROLLBAR)
 # https://docs.rollbar.com/docs/django
 
-django_heroku.settings(locals(), databases=False)
-# django_heroku.settings(locals())
+# django_heroku.settings(locals(), databases=False)
+django_heroku.settings(locals())
