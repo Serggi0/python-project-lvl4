@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 import django_heroku
+import dj_database_url
 
 from pathlib import Path
 from dotenv import load_dotenv
@@ -42,9 +43,11 @@ load_dotenv(dotenv_path=env_path)  # ! взять переменные сред�
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'False')
+# DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'todo-shka.herokuapp.com']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'todo-shka.herokuapp.com')
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'todo-shka.herokuapp.com']
 
 
 # Application definition
@@ -106,9 +109,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-
     }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -170,14 +175,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
-# import rollbar
-# ROLLBAR = {
-#     'access_token': os.getenv('POST_SERVER_ITEM_ACCESS_TOKEN'),
-#     'environment': 'development' if DEBUG else 'production',
-#     'root': BASE_DIR,
-# }
+import rollbar
+ROLLBAR = {
+    'access_token': os.getenv('POST_SERVER_ITEM_ACCESS_TOKEN'),
+    'environment': 'development' if DEBUG else 'production',
+    'root': BASE_DIR,
+}
 
-# rollbar.init(**ROLLBAR)
+rollbar.init(**ROLLBAR)
 # https://docs.rollbar.com/docs/django
 
-django_heroku.settings(locals())
+django_heroku.settings(locals(), databases=False)
+# django_heroku.settings(locals())
