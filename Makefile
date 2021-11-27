@@ -25,8 +25,8 @@ lint:
 	poetry run flake8 users
 
 test:
-	# poetry run pytest -v --cov=python-project-lvl4 tests/ --cov-report xml
-	poetry run coverage run manage.py test
+	poetry run pytest -v --cov=task_manager tests/ --cov-report xml
+
 
 poetry_check:
 	poetry check
@@ -36,3 +36,5 @@ check:
 
 
 .PHONY: install lint test translate compiletranslate check build
+
+# poetry run coverage run manage.py test
