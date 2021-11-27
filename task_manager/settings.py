@@ -44,9 +44,9 @@ load_dotenv(dotenv_path=env_path)  # ! взять переменные сред�
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'False'
-DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
-
+# DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'  # dev
+# DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'  # prod
+DEBUG = os.getenv('DJANGO_DEBUG') != 'False' #prod
 # DEBUG = True
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'todo-shka.herokuapp.com')
