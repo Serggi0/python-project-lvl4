@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-23 13:47+0000\n"
+"POT-Creation-Date: 2021-11-29 12:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,11 +84,11 @@ msgstr "Изменить статус"
 msgid "Delete status"
 msgstr "Удалить статус"
 
-#: task_manager/settings.py:149
+#: task_manager/settings.py:150
 msgid "English"
 msgstr "Английский"
 
-#: task_manager/settings.py:150
+#: task_manager/settings.py:151
 msgid "Russian"
 msgstr "Русский"
 
@@ -158,11 +158,11 @@ msgstr "Статус успешно создан"
 
 #: task_manager/user_messages.py:13
 msgid "Status was updated successfully"
-msgstr "Статус успешно изменен"
+msgstr "Статус успешно изменён"
 
 #: task_manager/user_messages.py:14
 msgid "Status has been successfully deleted"
-msgstr "Статус успешно удален"
+msgstr "Статус успешно удалён"
 
 #: task_manager/user_messages.py:16
 msgid "Label was created successfully"
@@ -287,6 +287,6 @@ msgstr "Зарегистрировать"
 msgid "Update user"
 msgstr "Изменить пользователя"
 
-#: users/views.py:98
+#: users/views.py:97
 msgid "Delete user"
 msgstr "Удалить пользователя"
