@@ -21,10 +21,11 @@ Django = "^3.2.9"
 python-dotenv = "^0.19.2"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
 flake8 = "^3.9.2"
-pytest-cov = "^2.12.1"
-coverage = "^5.5"
+pytest = "^6.2.5"
+pytest-django = "^4.4.0"
+pytest-cov = "^3.0.0"
+coverage = "^6.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

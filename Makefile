@@ -35,6 +35,6 @@ check:
 	make test lint poetry_check
 
 
-.PHONY: install lint test translate compiletranslate check build
+.PHONY: install lint test translate compiletranslate check build poetry_check
 
 # poetry run coverage run manage.py test
