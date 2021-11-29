@@ -40,7 +40,7 @@ class CreateLabel(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     success_message = user_messages.SUCCES_MESSAGE_CREATE_LABEL
     extra_context = {
         'title': _('Create Label'),
-        'button_name': _('Create label')
+        'button_name': _('Create')
     }
 
     def handle_no_permission(self):
