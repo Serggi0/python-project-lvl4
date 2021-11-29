@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-29 12:56+0000\n"
+"POT-Creation-Date: 2021-11-29 13:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -171,7 +171,7 @@ msgstr "Метка успешно создана"
 
 #: task_manager/user_messages.py:17
 msgid "Label was updated successfully"
-msgstr "Метка успешна изменена"
+msgstr "Метка успешно изменена"
 
 #: task_manager/user_messages.py:18
 msgid "Label has been successfully deleted"
