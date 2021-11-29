@@ -25,8 +25,7 @@ lint:
 	poetry run flake8 users
 
 test:
-	poetry run pytest -v --cov=task_manager tests/ --cov-report xml
-
+	poetry run pytest
 
 poetry_check:
 	poetry check
