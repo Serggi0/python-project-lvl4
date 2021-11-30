@@ -10,11 +10,16 @@ class TaskFilter(filters.FilterSet):
     '''
     Объявление фильтруемыми поля fields. См. class TasksView
     '''
-    self_tasks = filters.BooleanFilter(
+    own_tasks = filters.BooleanFilter(
         label=_('Only your own tasks'),
-        method='my_tasks',
+        method='filter_own_tasks',
         widget=CheckboxInput
     )
+
+    def filter_own_tasks(self, queryset, name, value):
+        if value:
+            return queryset.filter(author=self.request.user.pk)
+        return queryset
 
     label = filters.ModelChoiceFilter(
         queryset=Label.objects.all(),
@@ -23,9 +28,4 @@ class TaskFilter(filters.FilterSet):
 
     class Meta:
         model = Task
-        fields = ['status', 'executor', 'label', 'self_tasks']
-
-    def my_tasks(self, queryset, name, value):
-        if value:
-            return queryset.filter(author=self.request.user.pk)
-        return queryset
+        fields = ['status', 'executor', 'label', 'own_tasks']
