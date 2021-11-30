@@ -54,7 +54,7 @@ class CreateTask(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         был создан CreateTask (объект CreateView)
         '''
         form.instance.author = self.request.user
-        return super().form_valid(form)
+        return super(CreateTask, self).form_valid(form)
 
     def handle_no_permission(self):
         messages.error(

@@ -21,6 +21,7 @@ class TasksTable(tables.Table):
     )
 
     class Meta:
+
         model = Task
         template_name = "django_tables2/bootstrap4.html"
         fields = ('id', 'name', 'status', 'author', 'executor', 'create_date', 'links')
