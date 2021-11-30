@@ -23,7 +23,7 @@ class TaskFilter(filters.FilterSet):
 
     class Meta:
         model = Task
-        fields = ['status', 'executor', 'label']
+        fields = ['status', 'executor', 'label', 'self_tasks']
 
     def my_tasks(self, queryset, name, value):
         if value:
