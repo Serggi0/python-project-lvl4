@@ -189,5 +189,4 @@ ROLLBAR = {
 
 rollbar.init(**ROLLBAR)
 # https://docs.rollbar.com/docs/django
-
-# django_heroku.settings(locals(), databases=False)
+# https://youtu.be/K9BEf7UIlgk

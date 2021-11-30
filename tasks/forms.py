@@ -13,4 +13,4 @@ class TaskForm(forms.ModelForm):
 
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
-    #     self.fields['executor'].empty_label = '--'
+    #     self.fields['executor'].empty_label = ''

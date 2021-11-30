@@ -52,6 +52,10 @@ class CreateTask(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         '''
         Чтобы отслеживать, с помощью какого пользователя
         был создан CreateTask (объект CreateView)
+        Атрибут, request.user представляющий текущего пользователя,
+        определяется для каждого объекта запроса. Если этот пользователь
+        не вошел в систему, этот атрибут будет экземпляром AnonymousUser,
+        иначе он будет экземпляром User .
         '''
         form.instance.author = self.request.user
         return super(CreateTask, self).form_valid(form)
