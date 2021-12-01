@@ -19,7 +19,8 @@ class TaskFilter(filters.FilterSet):
 
     def filter_own_tasks(self, queryset, name, value):
         if value:
-            return queryset.filter(author__pk=self.request.user.pk)
+            if self.request.user.pk:
+                return queryset.filter(author__pk=self.request.user.pk)
         return queryset
 
     label_ = filters.ModelChoiceFilter(
