@@ -22,7 +22,6 @@ class TaskFilter(filters.FilterSet):
             return queryset.filter(author__pk=self.request.user.pk)
         return queryset
 
-
     label_ = filters.ModelChoiceFilter(
         queryset=Label.objects.all(),
         label=_('Label')
