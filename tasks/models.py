@@ -12,12 +12,14 @@ class Task(models.Model):
         verbose_name=_('Name')
     )
     description = models.CharField(
-        max_length=250, verbose_name=_('Description'),
+        max_length=250,
         blank=True,
+        verbose_name=_('Description'),
     )
     author = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
+        null=True,
         related_name='author',
         verbose_name=_('Author')
     )
@@ -37,6 +39,7 @@ class Task(models.Model):
     status = models.ForeignKey(
         Status,
         on_delete=models.PROTECT,
+        null=True,
         verbose_name=_('Status')
     )
     create_date = models.DateTimeField(
