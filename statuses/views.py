@@ -13,7 +13,6 @@ from task_manager import user_messages
 from statuses.tables import StatusesTable
 from statuses.forms import StatusForm
 from statuses.models import Status
-from tasks.models import Task
 
 
 class StatusesView(LoginRequiredMixin, SingleTableView):
