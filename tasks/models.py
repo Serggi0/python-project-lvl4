@@ -11,8 +11,7 @@ class Task(models.Model):
         unique=True, max_length=250,
         verbose_name=_('Name')
     )
-    description = models.CharField(
-        max_length=250,
+    description = models.TextField(
         blank=True,
         verbose_name=_('Description'),
     )
