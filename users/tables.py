@@ -33,4 +33,3 @@ class UsersTable(tables.Table):
         attrs = {
             'class': 'table table-striped'
         }
-

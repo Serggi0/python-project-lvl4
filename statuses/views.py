@@ -6,6 +6,7 @@ from django_tables2 import SingleTableView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.db.models import ProtectedError
 from django.utils.translation import gettext as _
 
 from task_manager import user_messages
@@ -75,22 +76,28 @@ class DeleteStatus(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     form_class = StatusForm
     template_name = 'users/delete.html'
     success_url = reverse_lazy('statuses:statuses')
-    success_message = user_messages.SUCCES_MESSAGE_DELETE_STATUS  # todo Перевод
+    success_message = user_messages.SUCCES_MESSAGE_DELETE_STATUS
     extra_context = {'title': _('Delete status')}
 
     def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if Task.objects.filter(status=obj.pk):
+        '''
+        Вызывается метод delete()
+        и перенаправляется на URL после успешного удаления объекта
+        '''
+        self.get_object()
+        try:
+            super(DeleteStatus, self).delete(self.request, *args, **kwargs)
+        except ProtectedError:
             messages.error(
                 self.request,
-                user_messages.ERROR_MESSAGE_NOT_POSSIBLE_DELETE_STATUS
+                user_messages.ERROR_MESSAGE_NOT_POSSIBLE_DELETE_STATUS,
             )
-            return redirect(reverse_lazy('statuses:statuses'))
-        messages.success(
-            self.request,
-            self.success_message
-        )
-        return super().delete(request, *args, **kwargs)
+        else:
+            messages.success(
+                self.request,
+                self.success_message,
+            )
+        return redirect(self.success_url)
 
     def handle_no_permission(self):
         messages.error(

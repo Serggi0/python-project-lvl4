@@ -123,7 +123,7 @@ class DeleteTask(
             self.request,
             self.success_message
         )
-        return super().delete(request, *args, **kwargs)
+        return super(DeleteTask, self).delete(self.request, *args, **kwargs)
 
     def test_func(self):
         self.object = self.get_object()
