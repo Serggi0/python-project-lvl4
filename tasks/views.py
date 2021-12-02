@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils.translation import gettext as _
 
+from users.models import User
 from task_manager import user_messages
 from tasks.models import Task
 from tasks.filters import TaskFilter
@@ -57,8 +58,8 @@ class CreateTask(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         не вошел в систему, этот атрибут будет экземпляром AnonymousUser,
         иначе он будет экземпляром User .
         '''
-        form.instance.author = self.request.user
-        return super(CreateTask, self).form_valid(form)
+        form.instance.author = User.objects.get(pk=self.request.user.pk)
+        return super().form_valid(form)
 
     def handle_no_permission(self):
         messages.error(
