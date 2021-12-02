@@ -38,7 +38,7 @@ class TaskTestCase(TestCase):
             status=Status.objects.get(pk=1),
         )
         self.task.save()
-        self.task.label.add(l1)
+        self.task.labels.add(l1)
 
     # если вкл: django.db.models.deletion.ProtectedError:
     # Очистка после каждого метода
@@ -61,7 +61,7 @@ class TaskTestCase(TestCase):
             status=Status.objects.get(pk=2),
         )
         self.task.save()
-        self.task.label.add(l2)
+        self.task.labels.add(l2)
         self.assertIn(self.task, Task.objects.all())
         self.assertIn('task_create', Task.objects.get(pk='2').name)
 
