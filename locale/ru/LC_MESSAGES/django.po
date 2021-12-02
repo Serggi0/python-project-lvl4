@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-29 14:11+0000\n"
+"POT-Creation-Date: 2021-12-02 11:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,7 +43,7 @@ msgstr "Удалить"
 msgid "Create label"
 msgstr "Создать метку"
 
-#: labels/views.py:24 task_manager/templates/base.html:34 tasks/forms.py:11
+#: labels/views.py:24 task_manager/templates/base.html:35 tasks/forms.py:12
 #: tasks/templates/tasks/view_task.html:37
 msgid "Labels"
 msgstr "Метки"
@@ -69,7 +69,7 @@ msgstr "Удалить метку"
 msgid "Create status"
 msgstr "Создать статус"
 
-#: statuses/views.py:23 task_manager/templates/base.html:31
+#: statuses/views.py:23 task_manager/templates/base.html:32
 msgid "Statuses"
 msgstr "Статусы"
 
@@ -93,27 +93,31 @@ msgstr "Английский"
 msgid "Russian"
 msgstr "Русский"
 
-#: task_manager/templates/base.html:20 task_manager/views.py:13 users/apps.py:8
+#: task_manager/templates/base.html:13
+msgid "Task manager Hexlet"
+msgstr "Менеджер задач Hexlet"
+
+#: task_manager/templates/base.html:21 task_manager/views.py:13 users/apps.py:8
 msgid "Task manager"
 msgstr "Менеджер задач"
 
-#: task_manager/templates/base.html:27 users/views.py:26
+#: task_manager/templates/base.html:28 users/views.py:26
 msgid "Users"
 msgstr "Пользователи"
 
-#: task_manager/templates/base.html:37 tasks/views.py:26 tasks/views.py:88
+#: task_manager/templates/base.html:38 tasks/views.py:26 tasks/views.py:92
 msgid "Tasks"
 msgstr "Задачи"
 
-#: task_manager/templates/base.html:44
+#: task_manager/templates/base.html:45
 msgid "Logout"
 msgstr "Выход"
 
-#: task_manager/templates/base.html:48 task_manager/views.py:23
+#: task_manager/templates/base.html:49 task_manager/views.py:23
 msgid "Entrance"
 msgstr "Вход"
 
-#: task_manager/templates/base.html:51
+#: task_manager/templates/base.html:52
 msgid "Registration"
 msgstr "Регистрация"
 
@@ -219,7 +223,7 @@ msgstr "Вы разлогинены"
 msgid "Only your own tasks"
 msgstr "Только свои задачи"
 
-#: tasks/filters.py:21 tasks/models.py:35
+#: tasks/filters.py:27 tasks/models.py:35
 msgid "Label"
 msgstr "Метка"
 
@@ -243,7 +247,7 @@ msgstr "Статус"
 msgid "Create task"
 msgstr "Создать задачу"
 
-#: tasks/templates/tasks/tasks.html:19
+#: tasks/templates/tasks/tasks.html:22
 msgid "See"
 msgstr "Показать"
 
@@ -251,11 +255,11 @@ msgstr "Показать"
 msgid "Date of creation"
 msgstr "Дата создания"
 
-#: tasks/views.py:74
+#: tasks/views.py:78
 msgid "Update task"
 msgstr "Изменить статус"
 
-#: tasks/views.py:107
+#: tasks/views.py:111
 msgid "Delete task"
 msgstr "Удалить статус"
 
