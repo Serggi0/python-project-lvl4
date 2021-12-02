@@ -22,14 +22,14 @@ class TaskFilter(filters.FilterSet):
             return queryset.filter(author=self.request.user).order_by('pk')
         return queryset
 
-    label = filters.ModelChoiceFilter(
+    labels = filters.ModelChoiceFilter(
         queryset=Label.objects.all(),
         label=_('Label')
     )
 
     class Meta:
         model = Task
-        fields = ['status', 'executor', 'label', 'own_tasks']
+        fields = ['status', 'executor', 'labels', 'own_tasks']
         filter_overrides = {
             filters.BooleanFilter: {
                 'filter_class': filters.BooleanFilter,

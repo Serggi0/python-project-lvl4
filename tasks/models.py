@@ -30,10 +30,10 @@ class Task(models.Model):
         blank=True,
         verbose_name=_('Executor')
     )
-    label = models.ManyToManyField(
+    labels = models.ManyToManyField(
         Label,
         blank=True,
-        verbose_name=_('Label')
+        verbose_name=_('Labels')
     )
     status = models.ForeignKey(
         Status,
