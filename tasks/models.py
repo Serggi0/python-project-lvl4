@@ -22,7 +22,7 @@ class Task(models.Model):
         related_name='author',
         # ! related_name - заданное имя для атрибута модели
         # ! по умолчанию получается прибавлением к имени
-        # ! связанной модели в нижнем регистре суффикса "_set". 
+        # ! связанной модели в нижнем регистре суффикса "_set".
         verbose_name=_('Author')
     )
     executor = models.ForeignKey(
