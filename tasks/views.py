@@ -27,9 +27,6 @@ class TasksView(LoginRequiredMixin, FilterView, SingleTableView):
     extra_context = {'title': _('Tasks')}
 
     def handle_no_permission(self):
-        '''
-        Перенаправление на страницу login, вместо исключения PermissionDenied
-        '''
         messages.error(
             self.request,
             user_messages.ERROR_MESSAGE_NOT_LOGGED
@@ -50,14 +47,6 @@ class CreateTask(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     }
 
     def form_valid(self, form):
-        '''
-        Чтобы отслеживать, с помощью какого пользователя
-        был создан CreateTask (объект CreateView)
-        Атрибут, request.user представляющий текущего пользователя,
-        определяется для каждого объекта запроса. Если этот пользователь
-        не вошел в систему, этот атрибут будет экземпляром AnonymousUser,
-        иначе он будет экземпляром User .
-        '''
         form.instance.author = User.objects.get(pk=self.request.user.pk)
         return super().form_valid(form)
 

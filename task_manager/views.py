@@ -13,23 +13,11 @@ def index(request):
         'title': _('Task manager'),
     })
 
-# def login(request):
-#     return HttpResponse('Авторизация')
-
 
 class LoginUser(LoginView):
-    form_class = AuthenticationForm  # стандартная форма авторизации
+    form_class = AuthenticationForm
     template_name = 'users/login.html'
     extra_context = {'title': _('Entrance')}
-
-    # _("Please enter a correct %(username)s and password. Note that both ")
-
-    # def get_invalid_login_error(self):
-    #     # messages.add_message(
-    #     #     self.request,
-    #     #     messages.error,
-    #     #     '!!!!')
-    #     return redirect(self.login_url)
 
     def get_success_url(self):
         messages.success(self.request, _('You are logged in'))
@@ -37,17 +25,6 @@ class LoginUser(LoginView):
 
 
 class LogoutUser(LogoutView):
-
     def get_next_page(self):
-        # messages.add_message(
-        #     self.request, messages.SUCCESS,
-        #     _('You are logged out, Good bye')
-        # )
         messages.info(self.request, _('You are logged out, Good bye'))
         return reverse_lazy('home')
-
-# def logout_user(request):
-#     # разлогинивание
-#     logout(request)
-#     messages.info(request, 'You are logged out, Good bye')
-#     return redirect('home')

@@ -17,35 +17,20 @@ from tasks.models import Task
 
 class UsersView(SingleTableView):
     model = User
-    # users = Users.objects.all()
     table_class = UsersTable
     template_name = 'users/users.html'
-    # замена имени шаблона вместо дефолтного 'users_list'
-    # context_object_name = 'all_users_list'
-    # замена названия коллекции для html-файла вместо дефолтного object_list
     extra_context = {'title': _('Users')}
-    # добавление заголовка страницы через атрибут extra_context
-
-    # def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-    #     return super().get_context_data(**kwargs)
 
 
 class CreateUser(SuccessMessageMixin, generic.CreateView):
     form_class = UserForm
     template_name = 'users/create.html'
     success_url = reverse_lazy('login')
-    # https://youtu.be/QK4qbVyY7oU?list=PLA0M1Bcd0w8xO_39zZll2u1lz_Q-Mwn1F
     success_message = user_messages.SUCCES_MESSAGE_CREATE_USER
-    # ! https://djangodoc.ru/3.1/ref/contrib/messages/
     extra_context = {
         'title': 'Registration',
         'button_name': _('Register')
     }
-
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     c_def = self.get_user_context(title="Registration")
-    #     return dict(list(context.items()) + list(c_def.items()))
 
 
 class UpdateUser(
@@ -75,17 +60,6 @@ class UpdateUser(
             return False
         return True
 
-# def create(request):
-#     return HttpResponse('Регистрация пользователя')
-
-# def update_user(request, user_id):
-#     return HttpResponse(f'Редактирование пользователя {user_id}')
-
-# def delete_user(request, user_id):
-#     u = Users.objects.get(pk=user_id)
-#     u.delete()
-#     return HttpResponse(f'Удаление пользователя {user_id}')
-
 
 class DeleteUser(
     LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView
@@ -106,10 +80,6 @@ class DeleteUser(
         return redirect(self.login_url)
 
     def delete(self, request, *args, **kwargs):
-        '''
-        class DeletionMixin. Вызывается метод delete()
-        и перенаправляется на URL после успешного удаления объекта
-        '''
         if Task.objects.filter(
             author=self.request.user.pk
         ) or Task.objects.filter(

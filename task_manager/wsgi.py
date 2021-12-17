@@ -7,9 +7,6 @@ For more information on this file, see
 https://docs.djangoproject.com/en/3.2/howto/deployment/wsgi/
 """
 
-# ! изменения после команды:
-# ! $ export DJANGO_SETTINGS_MODULE=hello_django.settings
-
 import os
 
 from django.core.wsgi import get_wsgi_application

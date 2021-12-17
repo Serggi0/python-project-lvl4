@@ -2,11 +2,10 @@ from django.urls import path
 from statuses import views
 
 
-app_name = 'statuses'  # ! установка пространства имен приложения
+app_name = 'statuses'
 
 urlpatterns = [
 
-    # страница статусов:
     path(
         '', views.StatusesView.as_view(), name='statuses'
     ),

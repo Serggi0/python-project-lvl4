@@ -8,7 +8,7 @@ from labels.models import Label
 class LabelTestCase(TestCase):
 
     def setUp(self):
-        # Установки запускаются перед каждым тестом
+
         self.user1 = get_user_model().objects.create_user(
             first_name='Ivan',
             last_name='Ivanov',
@@ -31,7 +31,6 @@ class LabelTestCase(TestCase):
         self.label2.save()
 
     def tearDown(self):
-        # Очистка после каждого метода
         self.user1.delete()
         self.user2.delete()
         self.label1.delete()
@@ -44,19 +43,18 @@ class LabelTestCase(TestCase):
         self.assertIn('label_create', Label.objects.get(pk='3').name)
 
     def test_labels_view_logout(self):
-        # более наглядный, чем следующий тест
         self.client.logout()
         response = self.client.get(
             '/logout/'
         )
         response = self.client.get(reverse('labels:labels'))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login/')  # переадресация
+        self.assertRedirects(response, '/login/')
 
     def test_labels_no_view(self):
         response = self.client.get(reverse('labels:labels'))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login/')  # переадресация
+        self.assertRedirects(response, '/login/')
 
     def test_update_label(self):
         self.client.login(username='masha', password='098test!@#')
@@ -74,7 +72,7 @@ class LabelTestCase(TestCase):
             reverse('labels:delete_label', args='1')
         )
         self.assertEqual(response.status_code, 302)
-        self.assertFalse(Label.objects.filter(pk=1))  # отсутствует
+        self.assertFalse(Label.objects.filter(pk=1))
 
     def test_delete_label_path(self):
         response = self.client.post('/labels/5/delete/')

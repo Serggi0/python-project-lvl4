@@ -10,7 +10,3 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ('name', 'description', 'status', 'executor', 'labels')
         labels = {'labels': _('Labels')}
-
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['executor'].empty_label = ''

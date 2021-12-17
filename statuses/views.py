@@ -79,10 +79,6 @@ class DeleteStatus(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     extra_context = {'title': _('Delete status')}
 
     def delete(self, request, *args, **kwargs):
-        '''
-        Вызывается метод delete()
-        и перенаправляется на URL после успешного удаления объекта
-        '''
         self.get_object()
         try:
             super(DeleteStatus, self).delete(self.request, *args, **kwargs)

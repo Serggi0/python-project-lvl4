@@ -8,7 +8,7 @@ from statuses.models import Status
 class StatusTestCase(TestCase):
 
     def setUp(self):
-        # Установки запускаются перед каждым тестом
+
         self.user1 = get_user_model().objects.create_user(
             first_name='Ivan',
             last_name='Ivanov',
@@ -31,7 +31,6 @@ class StatusTestCase(TestCase):
         self.status2.save()
 
     def tearDown(self):
-        # Очистка после каждого метода
         self.user1.delete()
         self.user2.delete()
         self.status1.delete()
@@ -44,17 +43,16 @@ class StatusTestCase(TestCase):
         self.assertIn('status_create', Status.objects.get(pk='3').name)
 
     def test_status_view_logout(self):
-        # более наглядный, чем следующий тест
         self.client.logout()
         response = self.client.get('/logout/')
         response = self.client.get(reverse('statuses:statuses'))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login/')  # переадресация
+        self.assertRedirects(response, '/login/')
 
     def test_status_no_view(self):
         response = self.client.get(reverse('statuses:statuses'))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login/')  # переадресация
+        self.assertRedirects(response, '/login/')
 
     def test_update_status(self):
         self.client.login(username='ivanich', password='123test098')
@@ -72,4 +70,4 @@ class StatusTestCase(TestCase):
             reverse('statuses:delete_status', args='1')
         )
         self.assertEqual(response.status_code, 302)
-        self.assertFalse(Status.objects.filter(pk=1))  # отсутствует
+        self.assertFalse(Status.objects.filter(pk=1))

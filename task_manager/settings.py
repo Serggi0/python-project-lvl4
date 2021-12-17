@@ -19,11 +19,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from django.utils.translation import gettext_lazy as _
-# ! выбор локалей
-# ! https://habr.com/ru/company/ruvds/blog/498452/
-# ! django.core.exceptions.AppRegistryNotReady: The translation infrastructure
-# ! cannot be initialized before the apps registry is ready. Check that you
-# ! don't make non-lazy gettext calls at import time.
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,21 +34,16 @@ LOCALE_PATHS = (
 # SECURITY WARNING: keep the secret key used in production secret!
 # load_dotenv()
 env_path = os.path.join(BASE_DIR, '.env')
-load_dotenv(dotenv_path=env_path)  # ! взять переменные среды из .env.
+load_dotenv(dotenv_path=env_path)
 
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'  # dev
-# DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'  # prod
-# DEBUG = os.getenv('DJANGO_DEBUG') != 'False'  # prod
-# DEBUG = False
+
 DEBUG = os.getenv('DJANGO_DEBUG') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'todo-shka.herokuapp.com')
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'todo-shka.herokuapp.com']
-
 
 # Application definition
 
@@ -167,10 +158,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    # '/var/www/static/', # ! папка для сервера?
 ]
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# ! сборная папка для файлов в режиме эксплуатации
 
 
 # Default primary key field type

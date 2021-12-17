@@ -27,10 +27,8 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('admin/', admin.site.urls),
 
-    # страница входа:
     path('login/', views.LoginUser.as_view(), name='login'),
 
-    # страница завершения сессии (выхода)
     path('logout/', views.LogoutUser.as_view(), name='logout'),
 
     path('users/', include('users.urls')),
@@ -38,4 +36,3 @@ urlpatterns = [
     path('labels/', include('labels.urls')),
     path('tasks/', include('tasks.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-# ! настройка статических файлов

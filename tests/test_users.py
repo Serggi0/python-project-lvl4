@@ -41,7 +41,6 @@ class UserTestCase(TestCase):
         response = self.client.get(reverse('users:users'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'users/users.html')
-        # Проверка того, что используется правильный шаблон
 
     def test_response_user(self):
         factory = RequestFactory()
@@ -75,9 +74,9 @@ class UserTestCase(TestCase):
         self.client.login(username='ivanich', password='123test098')
         response = self.client.post(reverse('users:delete_user', args='1'))
         self.assertEqual(response.status_code, 302)
-        self.assertFalse(User.objects.filter(pk=1))  # отсутствует pk=1
+        self.assertFalse(User.objects.filter(pk=1))
 
     def test_delete_other_user(self):
         self.client.login(username='ivanich', password='123test098')
         self.client.post(reverse('users:delete_user', args='2'))
-        self.assertTrue(User.objects.filter(pk=2))  # не удалился pk=2
+        self.assertTrue(User.objects.filter(pk=2))

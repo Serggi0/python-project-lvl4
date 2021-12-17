@@ -28,7 +28,6 @@ class LoginTestCase(TestCase):
         self.client.login(username='ivanich', password='123test098')
         response = self.client.get(reverse('users:users'))
         self.assertEqual(str(response.context['user']), 'Ivan Ivanov')
-        # Проверка что пользователь залогинился
 
     def test_wrong_username(self):
         user = authenticate(
@@ -53,7 +52,6 @@ class LoginTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/')
-        # ! self.client — HTTP-клиент тестовой библиотеки Django
 
     def test_logout_redirect(self):
         self.client.logout()
