@@ -6,7 +6,7 @@ from django_tables2 import SingleTableView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from task_manager import user_messages
 from users.forms import UserForm

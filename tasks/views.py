@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils.translation import gettext as _
 
+from users.models import User
 from task_manager import user_messages
 from tasks.models import Task
 from tasks.filters import TaskFilter
@@ -52,8 +53,12 @@ class CreateTask(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         '''
         Чтобы отслеживать, с помощью какого пользователя
         был создан CreateTask (объект CreateView)
+        Атрибут, request.user представляющий текущего пользователя,
+        определяется для каждого объекта запроса. Если этот пользователь
+        не вошел в систему, этот атрибут будет экземпляром AnonymousUser,
+        иначе он будет экземпляром User .
         '''
-        form.instance.author = self.request.user
+        form.instance.author = User.objects.get(pk=self.request.user.pk)
         return super().form_valid(form)
 
     def handle_no_permission(self):
@@ -118,7 +123,7 @@ class DeleteTask(
             self.request,
             self.success_message
         )
-        return super().delete(request, *args, **kwargs)
+        return super(DeleteTask, self).delete(self.request, *args, **kwargs)
 
     def test_func(self):
         self.object = self.get_object()

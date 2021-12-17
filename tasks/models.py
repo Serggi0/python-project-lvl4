@@ -11,14 +11,18 @@ class Task(models.Model):
         unique=True, max_length=250,
         verbose_name=_('Name')
     )
-    description = models.CharField(
-        max_length=250, verbose_name=_('Description'),
+    description = models.TextField(
         blank=True,
+        verbose_name=_('Description'),
     )
     author = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
+        null=True,
         related_name='author',
+        # ! related_name - заданное имя для атрибута модели
+        # ! по умолчанию получается прибавлением к имени
+        # ! связанной модели в нижнем регистре суффикса "_set".
         verbose_name=_('Author')
     )
     executor = models.ForeignKey(
@@ -29,14 +33,15 @@ class Task(models.Model):
         blank=True,
         verbose_name=_('Executor')
     )
-    label = models.ManyToManyField(
+    labels = models.ManyToManyField(
         Label,
         blank=True,
-        verbose_name=_('Label')
+        verbose_name=_('Labels')
     )
     status = models.ForeignKey(
         Status,
         on_delete=models.PROTECT,
+        null=True,
         verbose_name=_('Status')
     )
     create_date = models.DateTimeField(

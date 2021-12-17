@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from statuses.models import Status
 
 

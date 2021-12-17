@@ -27,7 +27,7 @@ class LoginTestCase(TestCase):
     def test_user_login(self):
         self.client.login(username='ivanich', password='123test098')
         response = self.client.get(reverse('users:users'))
-        self.assertEqual(str(response.context['user']), 'ivanich')
+        self.assertEqual(str(response.context['user']), 'Ivan Ivanov')
         # Проверка что пользователь залогинился
 
     def test_wrong_username(self):

@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from tasks.models import Task
 
 
@@ -21,6 +21,7 @@ class TasksTable(tables.Table):
     )
 
     class Meta:
+
         model = Task
         template_name = "django_tables2/bootstrap4.html"
         fields = ('id', 'name', 'status', 'author', 'executor', 'create_date', 'links')

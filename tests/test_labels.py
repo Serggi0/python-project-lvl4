@@ -68,10 +68,15 @@ class LabelTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual('label_update', Label.objects.get(pk=1).name)
 
-    def test_delete_label(self):
+    def test_delete_labels(self):
         self.client.login(username='ivanich', password='123test098')
         response = self.client.post(
-            reverse('labels:delete_label', kwargs={'pk': 1})
+            reverse('labels:delete_label', args='1')
         )
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Label.objects.filter(pk=1))  # отсутствует
+
+    def test_delete_label_path(self):
+        response = self.client.post('/labels/5/delete/')
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(Label.objects.filter(pk=5))
