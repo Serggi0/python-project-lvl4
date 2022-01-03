@@ -32,9 +32,8 @@ class UserTestCase(TestCase):
     def test_create_user(self):
         self.assertIn(self.user1, User.objects.all())
         self.assertIn('Ivan', User.objects.get(pk='1').first_name)
-        self.assertIn('Ivan Ivanov', User.objects.get(pk='1').full_name)
-        self.assertIn('Masha', User.objects.get(pk='2').first_name)
-        self.assertIn('Masha Petrova', User.objects.get(pk='2').full_name)
+        self.assertIn('Ivanov', User.objects.get(pk='1').last_name)
+
 
     def test_users_view(self):
         self.client.login(username='ivanich', password='123test098')
