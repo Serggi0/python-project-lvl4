@@ -17,6 +17,11 @@ class UsersTable(tables.Table):
         extra_context={'edit': _('Edit'), 'delete': _('Delete')}
     )
 
+    full_name = tables.Column(
+        accessor='full_name',
+        verbose_name=_('Full name'),
+    )
+
     create_date = tables.DateTimeColumn(
         accessor='date_joined',
         verbose_name=_('Create date')

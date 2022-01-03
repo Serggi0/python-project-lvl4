@@ -18,7 +18,6 @@ class Task(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
-        null=True,
         related_name='author',
         verbose_name=_('Author')
     )
