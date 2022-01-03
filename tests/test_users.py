@@ -34,7 +34,6 @@ class UserTestCase(TestCase):
         self.assertIn('Ivan', User.objects.get(pk='1').first_name)
         self.assertIn('Ivanov', User.objects.get(pk='1').last_name)
 
-
     def test_users_view(self):
         self.client.login(username='ivanich', password='123test098')
         response = self.client.get(reverse('users:users'))
