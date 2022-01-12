@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from tasks.models import Task
 from labels.models import Label
 from statuses.models import Status
+from users.models import User
 
 
 class TaskTestCase(TestCase):
@@ -38,6 +39,25 @@ class TaskTestCase(TestCase):
         )
         self.task.save()
         self.task.labels.add(l1)
+
+    def test_delete_use_user(self):
+        self.client.login(username='ivanich', password='123test098')
+        self.client.post(reverse('users:delete_user', args='1'))
+        self.assertTrue(User.objects.filter(pk=1))
+
+    def test_delete_use_status(self):
+        self.client.login(username='masha', password='098test!@#')
+        self.client.post(
+            reverse('statuses:delete_status', args='1')
+        )
+        self.assertTrue(Status.objects.filter(pk=1))
+
+    def test_delete_use_label(self):
+        self.client.login(username='masha', password='098test!@#')
+        self.client.post(
+            reverse('labels:delete_label', args='1')
+        )
+        self.assertTrue(Label.objects.filter(pk=1))
 
     def test_create_task(self):
         self.client.login(username='ivanich', password='123test098')

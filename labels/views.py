@@ -88,7 +88,7 @@ class DeleteLabel(
     def delete(self, request, *args, **kwargs):
         self.get_object()
         try:
-            super(DeleteLabel, self).delete(self.request, *args, **kwargs)
+            super().delete(self.request, *args, **kwargs)
         except ProtectedError:
             messages.error(
                 self.request,

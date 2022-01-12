@@ -31,6 +31,8 @@ class Task(models.Model):
     )
     labels = models.ManyToManyField(
         Label,
+        through='LabelToTask',
+        through_fields=('task', 'label'),
         blank=True,
         verbose_name=_('Labels')
     )
@@ -47,3 +49,14 @@ class Task(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+
+class LabelToTask(models.Model):
+    task = models.ForeignKey(
+        Task,
+        on_delete=models.CASCADE
+    )
+    label = models.ForeignKey(
+        Label,
+        on_delete=models.PROTECT
+    )
