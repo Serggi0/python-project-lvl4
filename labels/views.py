@@ -16,14 +16,8 @@ from labels.forms import LabelForm
 from labels.models import Label
 
 
-class LabelsView(LoginRequiredMixin, SingleTableView):
-    login_url = 'login'
-    model = Label
-    table_class = LabelsTable
-    template_name = 'labels/labels.html'
-    extra_context = {'title': _('Labels')}
-
-    def handle_no_permission(self):
+class HandleNoPermission():
+    def not_permit(self):
         messages.error(
             self.request,
             user_messages.ERROR_MESSAGE_NOT_LOGGED
@@ -31,7 +25,23 @@ class LabelsView(LoginRequiredMixin, SingleTableView):
         return redirect(self.login_url)
 
 
-class CreateLabel(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+class LabelsView(
+    LoginRequiredMixin, SingleTableView, HandleNoPermission
+):
+    login_url = 'login'
+    model = Label
+    table_class = LabelsTable
+    template_name = 'labels/labels.html'
+    extra_context = {'title': _('Labels')}
+
+    def handle_no_permission(self):
+        return super().not_permit()
+
+
+class CreateLabel(
+    LoginRequiredMixin, SuccessMessageMixin,
+    generic.CreateView, HandleNoPermission
+):
     login_url = 'login'
     model = Label
     form_class = LabelForm
@@ -44,14 +54,13 @@ class CreateLabel(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     }
 
     def handle_no_permission(self):
-        messages.error(
-            self.request,
-            user_messages.ERROR_MESSAGE_NOT_LOGGED
-        )
-        return redirect(self.login_url)
+        return super().not_permit()
 
 
-class UpdateLabel(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class UpdateLabel(
+    LoginRequiredMixin, SuccessMessageMixin,
+    UpdateView, HandleNoPermission
+):
     login_url = 'login'
     model = Label
     form_class = LabelForm
@@ -61,14 +70,13 @@ class UpdateLabel(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     extra_context = {'title': _('Update label')}
 
     def handle_no_permission(self):
-        messages.error(
-            self.request,
-            user_messages.ERROR_MESSAGE_NOT_LOGGED
-        )
-        return redirect(self.login_url)
+        return super().not_permit()
 
 
-class DeleteLabel(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class DeleteLabel(
+    LoginRequiredMixin, SuccessMessageMixin,
+    DeleteView, HandleNoPermission
+):
     login_url = 'login'
     model = Label
     form_class = LabelForm
@@ -94,8 +102,4 @@ class DeleteLabel(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         return redirect(self.success_url)
 
     def handle_no_permission(self):
-        messages.error(
-            self.request,
-            user_messages.ERROR_MESSAGE_NOT_LOGGED
-        )
-        return redirect(self.login_url)
+        return super().not_permit()

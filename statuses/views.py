@@ -15,14 +15,8 @@ from statuses.forms import StatusForm
 from statuses.models import Status
 
 
-class StatusesView(LoginRequiredMixin, SingleTableView):
-    login_url = 'login'
-    model = Status
-    table_class = StatusesTable
-    template_name = 'statuses/statuses.html'
-    extra_context = {'title': _('Statuses')}
-
-    def handle_no_permission(self):
+class HandleNoPermission():
+    def not_permit(self):
         messages.error(
             self.request,
             user_messages.ERROR_MESSAGE_NOT_LOGGED
@@ -30,8 +24,22 @@ class StatusesView(LoginRequiredMixin, SingleTableView):
         return redirect(self.login_url)
 
 
+class StatusesView(
+    LoginRequiredMixin, SingleTableView, HandleNoPermission
+):
+    login_url = 'login'
+    model = Status
+    table_class = StatusesTable
+    template_name = 'statuses/statuses.html'
+    extra_context = {'title': _('Statuses')}
+
+    def handle_no_permission(self):
+        return super().not_permit()
+
+
 class CreateStatus(
-    LoginRequiredMixin, SuccessMessageMixin, generic.CreateView
+    LoginRequiredMixin, SuccessMessageMixin,
+    generic.CreateView, HandleNoPermission
 ):
     login_url = 'login'
     model = Status
@@ -45,14 +53,13 @@ class CreateStatus(
     }
 
     def handle_no_permission(self):
-        messages.error(
-            self.request,
-            user_messages.ERROR_MESSAGE_NOT_LOGGED
-        )
-        return redirect(self.login_url)
+        return super().not_permit()
 
 
-class UpdateStatus(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class UpdateStatus(
+    LoginRequiredMixin, SuccessMessageMixin,
+    UpdateView, HandleNoPermission
+):
     login_url = 'login'
     model = Status
     form_class = StatusForm
@@ -69,7 +76,10 @@ class UpdateStatus(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return redirect(self.login_url)
 
 
-class DeleteStatus(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class DeleteStatus(
+    LoginRequiredMixin, SuccessMessageMixin,
+    DeleteView, HandleNoPermission
+):
     login_url = 'login'
     model = Status
     form_class = StatusForm
@@ -95,8 +105,4 @@ class DeleteStatus(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         return redirect(self.success_url)
 
     def handle_no_permission(self):
-        messages.error(
-            self.request,
-            user_messages.ERROR_MESSAGE_NOT_LOGGED
-        )
-        return redirect(self.login_url)
+        return super().not_permit()

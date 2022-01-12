@@ -70,9 +70,7 @@ class LabelTestCase(TestCase):
 
     def test_labels_view_logout(self):
         self.client.logout()
-        response = self.client.get(
-            '/logout/'
-        )
+        response = self.client.get('/logout/')
         response = self.client.get(reverse('labels:labels'))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/login/')

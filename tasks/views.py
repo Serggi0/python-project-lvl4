@@ -18,7 +18,19 @@ from tasks.forms import TaskForm
 from tasks.tables import TasksTable
 
 
-class TasksView(LoginRequiredMixin, FilterView, SingleTableView):
+class HandleNoPermission():
+    def not_permit(self):
+        messages.error(
+            self.request,
+            user_messages.ERROR_MESSAGE_NOT_LOGGED
+        )
+        return redirect(self.login_url)
+
+
+class TasksView(
+    LoginRequiredMixin, FilterView,
+    SingleTableView, HandleNoPermission
+):
     login_url = 'login'
     model = Task
     filterset_class = TaskFilter
@@ -27,14 +39,13 @@ class TasksView(LoginRequiredMixin, FilterView, SingleTableView):
     extra_context = {'title': _('Tasks')}
 
     def handle_no_permission(self):
-        messages.error(
-            self.request,
-            user_messages.ERROR_MESSAGE_NOT_LOGGED
-        )
-        return redirect(self.login_url)
+        return super().not_permit()
 
 
-class CreateTask(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+class CreateTask(
+    LoginRequiredMixin, SuccessMessageMixin,
+    generic.CreateView, HandleNoPermission
+):
     login_url = 'login'
     model = Task
     form_class = TaskForm
@@ -51,14 +62,13 @@ class CreateTask(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         return super().form_valid(form)
 
     def handle_no_permission(self):
-        messages.error(
-            self.request,
-            user_messages.ERROR_MESSAGE_NOT_LOGGED
-        )
-        return redirect(self.login_url)
+        return super().not_permit()
 
 
-class UpdateTask(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class UpdateTask(
+    LoginRequiredMixin, SuccessMessageMixin,
+    UpdateView, HandleNoPermission
+):
     login_url = 'login'
     model = Task
     form_class = TaskForm
@@ -68,44 +78,35 @@ class UpdateTask(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     extra_context = {'title': _('Update task')}
 
     def handle_no_permission(self):
-        messages.error(
-            self.request,
-            user_messages.ERROR_MESSAGE_NOT_LOGGED
-        )
-        return redirect(self.login_url)
+        return super().not_permit()
 
 
-class TaskView(LoginRequiredMixin, SuccessMessageMixin, DetailView):
+class TaskView(
+    LoginRequiredMixin, SuccessMessageMixin,
+    DetailView, HandleNoPermission
+):
     login_url = 'login'
     model = Task
     template_name = 'tasks/view_task.html'
     extra_context = {'title': _('Tasks')}
 
     def handle_no_permission(self):
-        messages.error(
-            self.request,
-            user_messages.ERROR_MESSAGE_NOT_LOGGED
-        )
-        return redirect(self.login_url)
+        return super().not_permit()
 
 
 class DeleteTask(
-    LoginRequiredMixin, SuccessMessageMixin, UserPassesTestMixin, DeleteView
+    LoginRequiredMixin, SuccessMessageMixin, UserPassesTestMixin,
+    DeleteView, HandleNoPermission
 ):
     login_url = 'login'
     model = Task
     template_name = 'users/delete.html'
     success_url = reverse_lazy('tasks:tasks')
     success_message = user_messages.SUCCES_MESSAGE_DELETE_TASK
-    error_message = user_messages.ERROR_MESSAGE_NOT_LOGGED
     extra_context = {'title': _('Delete task')}
 
     def handle_no_permission(self):
-        messages.error(
-            self.request,
-            self.error_message
-        )
-        return redirect(self.login_url)
+        return super().not_permit()
 
     def delete(self, request, *args, **kwargs):
         messages.success(

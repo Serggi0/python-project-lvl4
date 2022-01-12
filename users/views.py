@@ -15,6 +15,22 @@ from users.models import User
 from tasks.models import Task
 
 
+class HandleNoPermission():
+    def not_permit(self):
+        if self.request.user.is_authenticated:
+            messages.error(
+                self.request,
+                user_messages.ERROR_MESSAGE_NOT_RIGHTS
+            )
+            return redirect('users:users')
+        else:
+            messages.error(
+                self.request,
+                user_messages.ERROR_MESSAGE_NOT_LOGGED
+            )
+            return redirect(self.login_url)
+
+
 class UsersView(SingleTableView):
     model = User
     table_class = UsersTable
@@ -22,7 +38,9 @@ class UsersView(SingleTableView):
     extra_context = {'title': _('Users')}
 
 
-class CreateUser(SuccessMessageMixin, generic.CreateView):
+class CreateUser(
+    SuccessMessageMixin, generic.CreateView, HandleNoPermission
+):
     form_class = UserForm
     template_name = 'users/create.html'
     success_url = reverse_lazy('login')
@@ -34,7 +52,8 @@ class CreateUser(SuccessMessageMixin, generic.CreateView):
 
 
 class UpdateUser(
-    LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView
+    LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin,
+    UpdateView, HandleNoPermission
 ):
     login_url = 'login'
     model = User
@@ -43,26 +62,18 @@ class UpdateUser(
     success_url = reverse_lazy('users:users')
     extra_context = {'title': _('Update user')}
     success_message = user_messages.SUCCES_MESSAGE_UPDATE_USER
-    error_message = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
     def handle_no_permission(self):
-        messages.error(
-            self.request,
-            self.error_message
-        )
-        return redirect(self.login_url)
+        return super().not_permit()
 
     def test_func(self):
-        obj = self.get_object()
-        if self.request.user.is_authenticated and obj.pk != self.request.user.pk:
-            self.error_message = user_messages.ERROR_MESSAGE_NOT_RIGHTS
-            self.login_url = reverse_lazy('users:users')
-            return False
-        return True
+        object = self.get_object()
+        return object.pk == self.request.user.pk
 
 
 class DeleteUser(
-    LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView
+    LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin,
+    DeleteView, HandleNoPermission
 ):
     login_url = 'login'
     model = User
@@ -70,14 +81,9 @@ class DeleteUser(
     success_url = reverse_lazy('users:users')
     extra_context = {'title': _('Delete user')}
     success_message = user_messages.SUCCES_MESSAGE_DELETE_USER
-    error_message = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
     def handle_no_permission(self):
-        messages.error(
-            self.request,
-            self.error_message
-        )
-        return redirect(self.login_url)
+        return super().not_permit()
 
     def delete(self, request, *args, **kwargs):
         if Task.objects.filter(
@@ -97,10 +103,5 @@ class DeleteUser(
         return super().delete(request, *args, **kwargs)
 
     def test_func(self):
-        self.object = self.get_object()
-        if self.object.pk == self.request.user.pk:
-            return True
-        else:
-            self.error_message = user_messages.ERROR_MESSAGE_NOT_RIGHTS
-            self.login_url = reverse_lazy('users:users')
-            return False
+        object = self.get_object()
+        return object.pk == self.request.user.pk
