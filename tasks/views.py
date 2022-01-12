@@ -20,11 +20,18 @@ from tasks.tables import TasksTable
 
 class HandleNoPermission():
     def not_permit(self):
-        messages.error(
-            self.request,
-            user_messages.ERROR_MESSAGE_NOT_LOGGED
-        )
-        return redirect(self.login_url)
+        if self.request.user.is_authenticated:
+            messages.error(
+                self.request,
+                user_messages.ERROR_MESSAGE_DELETED_TASK
+            )
+            return redirect('tasks:tasks')
+        else:
+            messages.error(
+                self.request,
+                user_messages.ERROR_MESSAGE_NOT_LOGGED
+            )
+            return redirect(self.login_url)
 
 
 class TasksView(
@@ -116,11 +123,5 @@ class DeleteTask(
         return super().delete(request, *args, **kwargs)
 
     def test_func(self):
-        self.object = self.get_object()
-
-        if self.object.author.pk == self.request.user.pk:
-            return True
-        else:
-            self.error_message = user_messages.ERROR_MESSAGE_DELETED_TASK
-            self.login_url = reverse_lazy('tasks:tasks')
-            return False
+        object = self.get_object()
+        return object.author.pk == self.request.user.pk
