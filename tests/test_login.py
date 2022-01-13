@@ -17,13 +17,6 @@ class LoginTestCase(TestCase):
     def tearDown(self):
         self.user.delete()
 
-    def test_correct_username(self):
-        user = authenticate(
-            username='ivanich',
-            password='123test098'
-        )
-        self.assertTrue(user is not None and user.is_authenticated)
-
     def test_user_login(self):
         self.client.login(username='ivanich', password='123test098')
         response = self.client.get(reverse('users:users'))
@@ -53,10 +46,12 @@ class LoginTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/')
 
+    def test_not_redirect_if_not_logged_in(self):
+        response = self.client.get('/login/')
+        self.assertEqual(response.status_code, 200)
+
     def test_logout_redirect(self):
         self.client.logout()
-        response = self.client.get(
-            '/logout/'
-        )
+        response = self.client.get('/logout/')
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/')

@@ -37,24 +37,13 @@ class LabelTestCase(TestCase):
         self.label2.delete()
 
     def test_create_label(self):
-        self.label3 = Label(name='label_create')
-        self.label3.save()
-        self.assertIn(self.label3, Label.objects.all())
-        self.assertIn('label_create', Label.objects.get(pk='3').name)
-
-    def test_labels_view_logout(self):
-        self.client.logout()
-        response = self.client.get(
-            '/logout/'
+        self.client.login(username='masha', password='098test!@#')
+        response = self.client.post(
+            reverse('labels:create_label'),
+            {'name': 'label_create'}
         )
-        response = self.client.get(reverse('labels:labels'))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login/')
-
-    def test_labels_no_view(self):
-        response = self.client.get(reverse('labels:labels'))
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login/')
+        self.assertTrue(Label.objects.get(name='label_create'))
 
     def test_update_label(self):
         self.client.login(username='masha', password='098test!@#')
@@ -78,3 +67,15 @@ class LabelTestCase(TestCase):
         response = self.client.post('/labels/5/delete/')
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Label.objects.filter(pk=5))
+
+    def test_labels_view_logout(self):
+        self.client.logout()
+        response = self.client.get('/logout/')
+        response = self.client.get(reverse('labels:labels'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login/')
+
+    def test_labels_no_view(self):
+        response = self.client.get(reverse('labels:labels'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login/')

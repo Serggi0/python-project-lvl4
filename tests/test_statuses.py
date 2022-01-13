@@ -37,22 +37,13 @@ class StatusTestCase(TestCase):
         self.status2.delete()
 
     def test_create_status(self):
-        self.status3 = Status(name='status_create')
-        self.status3.save()
-        self.assertIn(self.status3, Status.objects.all())
-        self.assertIn('status_create', Status.objects.get(pk='3').name)
-
-    def test_status_view_logout(self):
-        self.client.logout()
-        response = self.client.get('/logout/')
-        response = self.client.get(reverse('statuses:statuses'))
+        self.client.login(username='masha', password='098test!@#')
+        response = self.client.post(
+            reverse('statuses:create_status'),
+            {'name': 'status_create'}
+        )
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login/')
-
-    def test_status_no_view(self):
-        response = self.client.get(reverse('statuses:statuses'))
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login/')
+        self.assertTrue(Status.objects.get(name='status_create'))
 
     def test_update_status(self):
         self.client.login(username='ivanich', password='123test098')
@@ -71,3 +62,15 @@ class StatusTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Status.objects.filter(pk=1))
+
+    def test_status_view_logout(self):
+        self.client.logout()
+        response = self.client.get('/logout/')
+        response = self.client.get(reverse('statuses:statuses'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login/')
+
+    def test_status_no_view(self):
+        response = self.client.get(reverse('statuses:statuses'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login/')

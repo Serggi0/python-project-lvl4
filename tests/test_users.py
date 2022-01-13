@@ -32,29 +32,19 @@ class UserTestCase(TestCase):
     def test_create_user(self):
         self.assertIn(self.user1, User.objects.all())
         self.assertIn('Ivan', User.objects.get(pk='1').first_name)
-        self.assertIn('Ivan Ivanov', User.objects.get(pk='1').full_name)
-        self.assertIn('Masha', User.objects.get(pk='2').first_name)
-        self.assertIn('Masha Petrova', User.objects.get(pk='2').full_name)
+        self.assertIn('Ivanov', User.objects.get(pk='1').last_name)
 
-    def test_users_view(self):
-        self.client.login(username='ivanich', password='123test098')
-        response = self.client.get(reverse('users:users'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'users/users.html')
-
-    def test_response_user(self):
-        factory = RequestFactory()
-        request = factory.get('')
-        request.user = self.user1
-        response = CreateUser.as_view()(request)
-        self.assertEqual(response.status_code, 200)
-
-    def test_view_update_user(self):
-        factory = RequestFactory()
-        request = factory.post('')
-        request.user = self.user1
-        response = UpdateUser.as_view()(request, pk='1')
-        self.assertEqual(response.status_code, 200)
+    def test_register_user(self):
+        response = self.client.post(reverse('users:create_user'), {
+            'first_name': 'Igor',
+            'last_name': 'Petrov',
+            'username': 'gosha',
+            'password1': '123test0',
+            'password2': '123test0',
+        }
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(User.objects.get(username='gosha'))
 
     def test_update_user(self):
         self.client.login(username='ivanich', password='123test098')
@@ -80,3 +70,23 @@ class UserTestCase(TestCase):
         self.client.login(username='ivanich', password='123test098')
         self.client.post(reverse('users:delete_user', args='2'))
         self.assertTrue(User.objects.filter(pk=2))
+
+    def test_users_view(self):
+        self.client.login(username='ivanich', password='123test098')
+        response = self.client.get(reverse('users:users'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'users/users.html')
+
+    def test_response_user(self):
+        factory = RequestFactory()
+        request = factory.get('')
+        request.user = self.user1
+        response = CreateUser.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_update_user(self):
+        factory = RequestFactory()
+        request = factory.post('')
+        request.user = self.user1
+        response = UpdateUser.as_view()(request, pk='1')
+        self.assertEqual(response.status_code, 200)
