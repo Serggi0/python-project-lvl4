@@ -11,4 +11,4 @@ This is fourth training project on [Hexlet.io](https://ru.hexlet.io) course. The
 
 Task Manager is a task management system similar to http://www.redmine.org /. It allows you to set tasks, assign performers and change their statuses. Registration and authentication are required to work with the system. 
 
-My app on [Heroku](https://todo-shka.herokuapp.com/)
+My app on [Heroku](https://todo-ska.herokuapp.com/)
