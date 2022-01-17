@@ -11,7 +11,7 @@ class HandleNoPermissionMixin:
                 self.request,
                 self.error_message_user_is_authenticated
             )
-            return redirect('tasks:tasks')
+            return redirect(self.url_if_user_is_authenticated)
         else:
             messages.error(
                 self.request,

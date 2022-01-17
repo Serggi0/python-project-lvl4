@@ -7,7 +7,6 @@ from django_tables2 import SingleTableView
 from django_filters.views import FilterView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
-from django.shortcuts import redirect
 from django.utils.translation import gettext as _
 
 from users.models import User
@@ -16,44 +15,31 @@ from tasks.models import Task
 from tasks.filters import TaskFilter
 from tasks.forms import TaskForm
 from tasks.tables import TasksTable
-
-
-class HandleNoPermission():
-    def not_permit(self):
-        if self.request.user.is_authenticated:
-            messages.error(
-                self.request,
-                user_messages.ERROR_MESSAGE_DELETED_TASK
-            )
-            return redirect('tasks:tasks')
-        else:
-            messages.error(
-                self.request,
-                user_messages.ERROR_MESSAGE_NOT_LOGGED
-            )
-            return redirect(self.login_url)
+from task_manager.utils import HandleNoPermissionMixin
 
 
 class TasksView(
+    HandleNoPermissionMixin,
     LoginRequiredMixin, FilterView,
-    SingleTableView, HandleNoPermission
+    SingleTableView
 ):
-    login_url = 'login'
     model = Task
     filterset_class = TaskFilter
     table_class = TasksTable
     template_name = 'tasks/tasks.html'
     extra_context = {'title': _('Tasks')}
-
-    def handle_no_permission(self):
-        return super().not_permit()
+    url_if_user_is_authenticated = 'tasks:tasks'
+    error_message_user_is_authenticated = (
+        user_messages.ERROR_MESSAGE_DELETED_TASK
+    )
+    error_message_not_logged = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
 
 class CreateTask(
+    HandleNoPermissionMixin,
     LoginRequiredMixin, SuccessMessageMixin,
-    generic.CreateView, HandleNoPermission
+    generic.CreateView
 ):
-    login_url = 'login'
     model = Task
     form_class = TaskForm
     template_name = 'users/create.html'
@@ -63,57 +49,65 @@ class CreateTask(
         'title': 'Create task',
         'button_name': _('Create')
     }
+    url_if_user_is_authenticated = 'tasks:tasks'
+    error_message_user_is_authenticated = (
+        user_messages.ERROR_MESSAGE_DELETED_TASK
+    )
+    error_message_not_logged = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
     def form_valid(self, form):
         form.instance.author = User.objects.get(pk=self.request.user.pk)
         return super().form_valid(form)
 
-    def handle_no_permission(self):
-        return super().not_permit()
-
 
 class UpdateTask(
+    HandleNoPermissionMixin,
     LoginRequiredMixin, SuccessMessageMixin,
-    UpdateView, HandleNoPermission
+    UpdateView
 ):
-    login_url = 'login'
     model = Task
     form_class = TaskForm
     template_name = 'users/update.html'
     success_url = reverse_lazy('tasks:tasks')
     success_message = user_messages.SUCCES_MESSAGE_UPDATE_TASK
     extra_context = {'title': _('Update task')}
-
-    def handle_no_permission(self):
-        return super().not_permit()
+    url_if_user_is_authenticated = 'tasks:tasks'
+    error_message_user_is_authenticated = (
+        user_messages.ERROR_MESSAGE_DELETED_TASK
+    )
+    error_message_not_logged = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
 
 class TaskView(
+    HandleNoPermissionMixin,
     LoginRequiredMixin, SuccessMessageMixin,
-    DetailView, HandleNoPermission
+    DetailView
 ):
-    login_url = 'login'
     model = Task
     template_name = 'tasks/view_task.html'
     extra_context = {'title': _('Tasks')}
-
-    def handle_no_permission(self):
-        return super().not_permit()
+    url_if_user_is_authenticated = 'tasks:tasks'
+    error_message_user_is_authenticated = (
+        user_messages.ERROR_MESSAGE_DELETED_TASK
+    )
+    error_message_not_logged = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
 
 class DeleteTask(
+    HandleNoPermissionMixin,
     LoginRequiredMixin, SuccessMessageMixin, UserPassesTestMixin,
-    DeleteView, HandleNoPermission
+    DeleteView
 ):
-    login_url = 'login'
     model = Task
     template_name = 'users/delete.html'
     success_url = reverse_lazy('tasks:tasks')
     success_message = user_messages.SUCCES_MESSAGE_DELETE_TASK
     extra_context = {'title': _('Delete task')}
-
-    def handle_no_permission(self):
-        return super().not_permit()
+    url_if_user_is_authenticated = 'tasks:tasks'
+    error_message_user_is_authenticated = (
+        user_messages.ERROR_MESSAGE_DELETED_TASK
+    )
+    error_message_not_logged = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
     def delete(self, request, *args, **kwargs):
         messages.success(

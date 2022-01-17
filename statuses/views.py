@@ -13,35 +13,25 @@ from task_manager import user_messages
 from statuses.tables import StatusesTable
 from statuses.forms import StatusForm
 from statuses.models import Status
-
-
-class HandleNoPermission():
-    def not_permit(self):
-        messages.error(
-            self.request,
-            user_messages.ERROR_MESSAGE_NOT_LOGGED
-        )
-        return redirect(self.login_url)
+from task_manager.utils import HandleNoPermissionMixin
 
 
 class StatusesView(
-    LoginRequiredMixin, SingleTableView, HandleNoPermission
+    HandleNoPermissionMixin,
+    LoginRequiredMixin, SingleTableView
 ):
-    login_url = 'login'
     model = Status
     table_class = StatusesTable
     template_name = 'statuses/statuses.html'
     extra_context = {'title': _('Statuses')}
-
-    def handle_no_permission(self):
-        return super().not_permit()
+    error_message_not_logged = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
 
 class CreateStatus(
+    HandleNoPermissionMixin,
     LoginRequiredMixin, SuccessMessageMixin,
-    generic.CreateView, HandleNoPermission
+    generic.CreateView
 ):
-    login_url = 'login'
     model = Status
     form_class = StatusForm
     template_name = 'users/create.html'
@@ -51,16 +41,14 @@ class CreateStatus(
         'title': _('Create Status'),
         'button_name': _('Create')
     }
-
-    def handle_no_permission(self):
-        return super().not_permit()
+    error_message_not_logged = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
 
 class UpdateStatus(
+    HandleNoPermissionMixin,
     LoginRequiredMixin, SuccessMessageMixin,
-    UpdateView, HandleNoPermission
+    UpdateView
 ):
-    login_url = 'login'
     model = Status
     form_class = StatusForm
     template_name = 'users/update.html'
@@ -68,25 +56,21 @@ class UpdateStatus(
     success_message = user_messages.SUCCES_MESSAGE_UPDATE_STATUS
     extra_context = {'title': _('Update status')}
 
-    def handle_no_permission(self):
-        messages.error(
-            self.request,
-            user_messages.ERROR_MESSAGE_NOT_LOGGED
-        )
-        return redirect(self.login_url)
+    error_message_not_logged = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
 
 class DeleteStatus(
+    HandleNoPermissionMixin,
     LoginRequiredMixin, SuccessMessageMixin,
-    DeleteView, HandleNoPermission
+    DeleteView
 ):
-    login_url = 'login'
     model = Status
     form_class = StatusForm
     template_name = 'users/delete.html'
     success_url = reverse_lazy('statuses:statuses')
     success_message = user_messages.SUCCES_MESSAGE_DELETE_STATUS
     extra_context = {'title': _('Delete status')}
+    error_message_not_logged = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
     def delete(self, request, *args, **kwargs):
         self.get_object()
@@ -103,6 +87,3 @@ class DeleteStatus(
                 self.success_message,
             )
         return redirect(self.success_url)
-
-    def handle_no_permission(self):
-        return super().not_permit()
