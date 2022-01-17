@@ -13,7 +13,7 @@ from task_manager import user_messages
 from statuses.tables import StatusesTable
 from statuses.forms import StatusForm
 from statuses.models import Status
-from task_manager.utils import HandleNoPermissionMixin
+from task_manager.mixins import HandleNoPermissionMixin
 
 
 class StatusesView(

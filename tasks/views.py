@@ -15,7 +15,7 @@ from tasks.models import Task
 from tasks.filters import TaskFilter
 from tasks.forms import TaskForm
 from tasks.tables import TasksTable
-from task_manager.utils import HandleNoPermissionMixin
+from task_manager.mixins import HandleNoPermissionMixin
 
 
 class TasksView(

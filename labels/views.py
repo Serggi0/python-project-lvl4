@@ -14,7 +14,7 @@ from task_manager import user_messages
 from labels.tables import LabelsTable
 from labels.forms import LabelForm
 from labels.models import Label
-from task_manager.utils import HandleNoPermissionMixin
+from task_manager.mixins import HandleNoPermissionMixin
 
 
 class LabelsView(

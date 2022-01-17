@@ -17,11 +17,6 @@ class LoginTestCase(TestCase):
     def tearDown(self):
         self.user.delete()
 
-    def test_user_login(self):
-        self.client.login(username='ivanich', password='123test098')
-        response = self.client.get(reverse('users:users'))
-        self.assertEqual(str(response.context['user']), 'Ivan Ivanov')
-
     def test_wrong_username(self):
         user = authenticate(
             username='wrong',

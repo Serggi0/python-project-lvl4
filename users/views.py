@@ -13,7 +13,7 @@ from users.forms import UserForm
 from users.tables import UsersTable
 from users.models import User
 from tasks.models import Task
-from task_manager.utils import HandleNoPermissionMixin
+from task_manager.mixins import HandleNoPermissionMixin
 
 
 class UsersView(SingleTableView):
