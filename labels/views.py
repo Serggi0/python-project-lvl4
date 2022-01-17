@@ -14,35 +14,25 @@ from task_manager import user_messages
 from labels.tables import LabelsTable
 from labels.forms import LabelForm
 from labels.models import Label
-
-
-class HandleNoPermission():
-    def not_permit(self):
-        messages.error(
-            self.request,
-            user_messages.ERROR_MESSAGE_NOT_LOGGED
-        )
-        return redirect(self.login_url)
+from task_manager.utils import HandleNoPermissionMixin
 
 
 class LabelsView(
-    LoginRequiredMixin, SingleTableView, HandleNoPermission
+    HandleNoPermissionMixin,
+    LoginRequiredMixin, SingleTableView
 ):
-    login_url = 'login'
     model = Label
     table_class = LabelsTable
     template_name = 'labels/labels.html'
     extra_context = {'title': _('Labels')}
-
-    def handle_no_permission(self):
-        return super().not_permit()
+    error_message_not_logged = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
 
 class CreateLabel(
+    HandleNoPermissionMixin,
     LoginRequiredMixin, SuccessMessageMixin,
-    generic.CreateView, HandleNoPermission
+    generic.CreateView
 ):
-    login_url = 'login'
     model = Label
     form_class = LabelForm
     template_name = 'users/create.html'
@@ -52,16 +42,14 @@ class CreateLabel(
         'title': _('Create Label'),
         'button_name': _('Create')
     }
-
-    def handle_no_permission(self):
-        return super().not_permit()
+    error_message_not_logged = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
 
 class UpdateLabel(
+    HandleNoPermissionMixin,
     LoginRequiredMixin, SuccessMessageMixin,
-    UpdateView, HandleNoPermission
+    UpdateView
 ):
-    login_url = 'login'
     model = Label
     form_class = LabelForm
     template_name = 'users/update.html'
@@ -69,21 +57,21 @@ class UpdateLabel(
     success_message = user_messages.SUCCES_MESSAGE_UPDATE_LABEL
     extra_context = {'title': _('Update label')}
 
-    def handle_no_permission(self):
-        return super().not_permit()
+    error_message_not_logged = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
 
 class DeleteLabel(
+    HandleNoPermissionMixin,
     LoginRequiredMixin, SuccessMessageMixin,
-    DeleteView, HandleNoPermission
+    DeleteView
 ):
-    login_url = 'login'
     model = Label
     form_class = LabelForm
     template_name = 'users/delete.html'
     success_url = reverse_lazy('labels:labels')
     success_message = user_messages.SUCCES_MESSAGE_DELETE_LABEL
     extra_context = {'title': _('Delete label')}
+    error_message_not_logged = user_messages.ERROR_MESSAGE_NOT_LOGGED
 
     def delete(self, request, *args, **kwargs):
         self.get_object()
@@ -100,6 +88,3 @@ class DeleteLabel(
                 self.success_message,
             )
         return redirect(self.success_url)
-
-    def handle_no_permission(self):
-        return super().not_permit()
